@@ -3,6 +3,7 @@
 	import { modStore } from '../../stores';
 	import type { TItemType } from '../../typing/types';
 	import AutoComplete from '../common/auto-complete.svelte';
+	import Button from '../common/button.svelte';
 
 	import Select from '../common/select.svelte';
 	import TextInput from '../common/text-input.svelte';
@@ -46,4 +47,7 @@
 		options={modOptions}
 		testid="new-item-mod"
 	/>
+	<div>
+		<Button callback={() => {}}>Save</Button>
+	</div>
 </div>
