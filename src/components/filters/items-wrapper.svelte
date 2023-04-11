@@ -7,10 +7,9 @@
 
 	// STATE
 
-	$: items = $itemStore;
 	// LOGIC
 </script>
 
-{#each items as item}
+{#each $itemStore as item}
 	<ItemMiniCard {item} />
 {/each}
