@@ -13,4 +13,5 @@
 	{value}
 	on:input={(event) => callback(event.currentTarget.value)}
 	data-testid={testid}
+	class="bg-off-white rounded-sm border border-green"
 />

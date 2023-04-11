@@ -30,17 +30,20 @@
 		callback={(value) => {
 			itemName = value;
 		}}
+		testid="new-item-name"
 	/>
 	<Select
 		label="Item type"
 		value={itemType}
 		callback={(value) => (itemType = value)}
 		options={itemTypeOptions}
+		testid="new-item-type"
 	/>
 	<AutoComplete
 		label="Mod origin"
 		value={mod}
 		callback={(value) => (mod = value)}
 		options={modOptions}
+		testid="new-item-mod"
 	/>
 </div>
