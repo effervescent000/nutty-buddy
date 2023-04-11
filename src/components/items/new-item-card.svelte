@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { ITEM_TYPES } from '../../constants/item-constants';
 	import { itemCounter, itemStore, modStore } from '../../stores';
+
+	import { ITEM_TYPES } from '../../constants/item-constants';
+
 	import type { TItemType } from '../../typing/types';
+
 	import AutoComplete from '../common/auto-complete.svelte';
 	import Button from '../common/button.svelte';
 
