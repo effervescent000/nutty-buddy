@@ -46,3 +46,5 @@ export const requirementCounter = createCounterStore();
 
 export const modStore = createMinimalItemStore<IMod>();
 export const modCounter = createCounterStore();
+
+export const focusedItem = writable<IItem | undefined>(undefined);
