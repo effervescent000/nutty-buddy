@@ -1,12 +1,19 @@
+import type { TItemType } from './types';
+
 export interface IMinimalItem {
 	id: number;
 }
 
+export interface IMod extends IMinimalItem {
+	name: string;
+}
+
 export interface IItem extends IMinimalItem {
 	name: string;
-	type: 'item' | 'liquid' | 'gas';
+	type: TItemType;
+	mod?: string;
 	recipes: number[];
-	quantity?: number;
+	quantityOwned?: number;
 }
 
 export interface IRecipe extends IMinimalItem {

@@ -15,6 +15,7 @@
 		data-testid={testid}
 		{value}
 		on:input={(event) => callback(event.currentTarget.value)}
+		class="bg-off-white rounded-sm border border-green"
 	>
 		{#each [{ name: '---', value: '' }, ...options] as option}
 			<option value={option.value}>{option.name}</option>

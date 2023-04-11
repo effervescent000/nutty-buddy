@@ -1,38 +1,48 @@
 import { writable } from 'svelte/store';
 
-import type { IItem, IRecipe, IRequirement } from './typing/interfaces';
+import type {
+	IMod,
+	IItem,
+	IRecipe,
+	IRequirement,
+	IMinimalItem
+} from './typing/interfaces';
 
-import { createStoreFuncs } from './utils/store-utils';
+import { createCounterFuncs, createStoreFuncs } from './utils/store-utils';
 
-export const itemStore = () => {
-	const store = writable<IItem[]>([]);
+// ********************
+// CUSTOM STORE CREATORS
+// ********************
 
-	const funcs = createStoreFuncs(store);
-
-	return {
-		subscribe: store.subscribe,
-		...funcs
-	};
-};
-
-export const recipeStore = () => {
-	const store = writable<IRecipe[]>([]);
-
-	const funcs = createStoreFuncs(store);
+const createMinimalItemStore = <T extends IMinimalItem>() => {
+	const store = writable<T[]>([]);
 
 	return {
 		subscribe: store.subscribe,
-		...funcs
+		...createStoreFuncs<T>(store)
 	};
 };
 
-export const requirementsStore = () => {
-	const store = writable<IRequirement[]>([]);
-
-	const funcs = createStoreFuncs(store);
-
+const createCounterStore = () => {
+	const store = writable(0);
 	return {
 		subscribe: store.subscribe,
-		...funcs
+		...createCounterFuncs(store)
 	};
 };
+
+// ********************
+// STORES
+// ********************
+
+export const itemStore = createMinimalItemStore<IItem>();
+export const itemCounter = createCounterStore();
+
+export const recipeStore = createMinimalItemStore<IRecipe>();
+export const recipeCounter = createCounterStore();
+
+export const requirementStore = createMinimalItemStore<IRequirement>();
+export const requirementCounter = createCounterStore();
+
+export const modStore = createMinimalItemStore<IMod>();
+export const modCounter = createCounterStore();

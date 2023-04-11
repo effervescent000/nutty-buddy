@@ -3,6 +3,8 @@
 	export let options: { value: string; name: string }[];
 	export let value: string;
 	export let callback: (value: string) => void;
+	export let label = '';
+	export let testid = '';
 
 	// STATE
 	let showOptions = false;
@@ -27,7 +29,15 @@
 </script>
 
 <div class="relative">
-	<input {value} on:input={handleChange} />
+	{#if label}
+		<span>{label}</span>
+	{/if}
+	<input
+		{value}
+		on:input={handleChange}
+		class="bg-off-white rounded-sm border border-green"
+		data-testid={testid}
+	/>
 	{#if showOptions}
 		<ul class="absolute">
 			{#each filteredOptions as opt}
