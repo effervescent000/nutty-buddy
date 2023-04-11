@@ -58,7 +58,10 @@
 					name: itemName,
 					type: itemType,
 					recipes: []
-				})}>Save</Button
+				})}
+			testid="new-item-save"
 		>
+			Save
+		</Button>
 	</div>
 </div>
