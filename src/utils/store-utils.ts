@@ -19,18 +19,18 @@ export const createStoreFuncs = <T extends IMinimalItem>(
 		);
 	};
 
-	const replace = (itemToReplace: T, replacement: T) => {
+	const update = (newItem: T) => {
 		const copyOfStore = get(store);
 		const foundIndex = copyOfStore.findIndex(
-			(itemToCheck) => itemToCheck.id === itemToReplace.id
+			(itemToCheck) => itemToCheck.id === newItem.id
 		);
-		if (foundIndex) {
-			copyOfStore[foundIndex] = replacement;
+		if (foundIndex !== -1) {
+			copyOfStore[foundIndex] = newItem;
+			store.set(copyOfStore);
 		}
-		store.set(copyOfStore);
 	};
 
-	return { append, remove, replace };
+	return { append, remove, update };
 };
 
 export const createCounterFuncs = (store: Writable<number>) => {

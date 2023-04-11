@@ -1,7 +1,7 @@
 import type { TItemType } from './types';
 
 export interface IMinimalItem {
-	id: number;
+	id?: number;
 }
 
 export interface IMod extends IMinimalItem {
