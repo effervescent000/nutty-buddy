@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ITEM_TYPES } from '../../constants/item-constants';
-	import { modStore } from '../../stores';
+	import { itemCounter, itemStore, modStore } from '../../stores';
 	import type { TItemType } from '../../typing/types';
 	import AutoComplete from '../common/auto-complete.svelte';
 	import Button from '../common/button.svelte';
@@ -48,6 +48,14 @@
 		testid="new-item-mod"
 	/>
 	<div>
-		<Button callback={() => {}}>Save</Button>
+		<Button
+			callback={() =>
+				itemStore.append({
+					id: itemCounter.fetchAndIncrement(),
+					name: itemName,
+					type: itemType,
+					recipes: []
+				})}>Save</Button
+		>
 	</div>
 </div>
