@@ -11,7 +11,7 @@ export interface IMod extends IMinimalItem {
 export interface IItem extends IMinimalItem {
 	name: string;
 	type: TItemType;
-	mod?: string;
+	mod?: number;
 	recipes: number[];
 	quantityOwned?: number;
 }

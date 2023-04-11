@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('can you do the most basic stuff in the app?', () => {
+test.describe('tests re: inputting items', () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto('/');
 	});
@@ -10,6 +10,8 @@ test.describe('can you do the most basic stuff in the app?', () => {
 		await page.getByTestId('new-item-type').selectOption('item');
 		await page.getByTestId('new-item-mod').type('testing 456', { delay: 50 });
 		await page.getByTestId('new-item-save').click();
+		// clicking the save button should also clear out the item values
+		await expect(page.getByTestId('new-item-name')).toHaveValue('');
 
 		await expect(page.getByTestId('mini-card-0')).toBeVisible();
 	});
