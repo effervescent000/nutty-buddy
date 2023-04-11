@@ -7,38 +7,32 @@ import { createStoreFuncs } from './utils/store-utils';
 export const itemStore = () => {
 	const store = writable<IItem[]>([]);
 
-	const { append, remove, replace } = createStoreFuncs(store);
+	const funcs = createStoreFuncs(store);
 
 	return {
 		subscribe: store.subscribe,
-		append,
-		remove,
-		replace
+		...funcs
 	};
 };
 
 export const recipeStore = () => {
 	const store = writable<IRecipe[]>([]);
 
-	const { append, remove, replace } = createStoreFuncs(store);
+	const funcs = createStoreFuncs(store);
 
 	return {
 		subscribe: store.subscribe,
-		append,
-		remove,
-		replace
+		...funcs
 	};
 };
 
 export const requirementsStore = () => {
 	const store = writable<IRequirement[]>([]);
 
-	const { append, remove, replace } = createStoreFuncs(store);
+	const funcs = createStoreFuncs(store);
 
 	return {
 		subscribe: store.subscribe,
-		append,
-		remove,
-		replace
+		...funcs
 	};
 };
