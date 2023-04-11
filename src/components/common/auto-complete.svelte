@@ -3,6 +3,7 @@
 	export let options: { value: string; name: string }[];
 	export let value: string;
 	export let callback: (value: string) => void;
+	export let label = '';
 
 	// STATE
 	let showOptions = false;
@@ -27,6 +28,9 @@
 </script>
 
 <div class="relative">
+	{#if label}
+		<span>{label}</span>
+	{/if}
 	<input {value} on:input={handleChange} />
 	{#if showOptions}
 		<ul class="absolute">
