@@ -27,7 +27,7 @@ const createMinimalItemStore = <T extends IMinimalItem>() => {
 };
 
 const createCounterStore = () => {
-	const store = writable(0);
+	const store = writable(1);
 	return {
 		subscribe: store.subscribe,
 		set: store.set,
