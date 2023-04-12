@@ -48,44 +48,44 @@
 				);
 				methodStore.set(JSON.parse(localStorage.getItem(METHODS) || '[]'));
 				methodsCounter.set(+(localStorage.getItem(METHOD_COUNTER) || 0));
+
+				unsubscribeFuncs.push(
+					...[
+						itemStore.subscribe((newVal) => {
+							localStorage.setItem(ITEMS, JSON.stringify(newVal));
+						}),
+						itemCounter.subscribe((newVal) =>
+							localStorage.setItem(ITEM_COUNTER, newVal.toString())
+						),
+						modStore.subscribe((newVal) =>
+							localStorage.setItem(MODS, JSON.stringify(newVal))
+						),
+						modCounter.subscribe((newVal) =>
+							localStorage.setItem(MOD_COUNTER, newVal.toString())
+						),
+						recipeStore.subscribe((newVal) =>
+							localStorage.setItem(RECIPES, JSON.stringify(newVal))
+						),
+						recipeCounter.subscribe((newVal) =>
+							localStorage.setItem(RECIPE_COUNTER, newVal.toString())
+						),
+						requirementStore.subscribe((newVal) =>
+							localStorage.setItem(REQUIREMENTS, JSON.stringify(newVal))
+						),
+						requirementCounter.subscribe((newVal) =>
+							localStorage.setItem(REQUIREMENT_COUNTER, newVal.toString())
+						),
+						methodStore.subscribe((newVal) =>
+							localStorage.setItem(METHODS, JSON.stringify(newVal))
+						),
+						methodsCounter.subscribe((newVal) =>
+							localStorage.setItem(METHOD_COUNTER, newVal.toString())
+						)
+					]
+				);
 			} catch (error) {
 				console.log('Error getting local storage, please clear it');
 			}
-
-			unsubscribeFuncs.push(
-				...[
-					itemStore.subscribe((newVal) => {
-						localStorage.setItem(ITEMS, JSON.stringify(newVal));
-					}),
-					itemCounter.subscribe((newVal) =>
-						localStorage.setItem(ITEM_COUNTER, newVal.toString())
-					),
-					modStore.subscribe((newVal) =>
-						localStorage.setItem(MODS, JSON.stringify(newVal))
-					),
-					modCounter.subscribe((newVal) =>
-						localStorage.setItem(MOD_COUNTER, newVal.toString())
-					),
-					recipeStore.subscribe((newVal) =>
-						localStorage.setItem(RECIPES, JSON.stringify(newVal))
-					),
-					recipeCounter.subscribe((newVal) =>
-						localStorage.setItem(RECIPE_COUNTER, newVal.toString())
-					),
-					requirementStore.subscribe((newVal) =>
-						localStorage.setItem(REQUIREMENTS, JSON.stringify(newVal))
-					),
-					requirementCounter.subscribe((newVal) =>
-						localStorage.setItem(REQUIREMENT_COUNTER, newVal.toString())
-					),
-					methodStore.subscribe((newVal) =>
-						localStorage.setItem(METHODS, JSON.stringify(newVal))
-					),
-					methodsCounter.subscribe((newVal) =>
-						localStorage.setItem(METHOD_COUNTER, newVal.toString())
-					)
-				]
-			);
 		}
 	});
 
