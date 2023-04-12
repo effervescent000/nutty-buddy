@@ -4,6 +4,10 @@ export interface IMinimalItem {
 	id?: number;
 }
 
+export interface IUser extends IMinimalItem {
+	name: string;
+}
+
 export interface IMod extends IMinimalItem {
 	name: string;
 }
