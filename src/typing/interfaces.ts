@@ -26,3 +26,7 @@ export interface IRequirement extends IMinimalItem {
 	name: string;
 	complete: boolean;
 }
+
+export interface IMethod extends IMinimalItem {
+	name: string;
+}
