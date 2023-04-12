@@ -21,12 +21,12 @@
 
 	// STATE
 	let item: IItem;
-	let modName: string;
+	let modName: string = '';
 
 	// LOGIC
 
 	$: item = $focusedItem || { name: '', type: '', recipes: [] };
-	$: modName = modName = item.mod ? $modsById[item.mod].name : '';
+	$: modName = item.mod ? $modsById[item.mod].name : modName;
 
 	const itemTypeOptions = Object.values(ITEM_TYPES).map((type) => ({
 		name: type,
@@ -52,18 +52,28 @@
 			itemStore.update($focusedItem);
 			maybeAddMod($focusedItem.mod);
 			focusedItem.set(undefined);
+			modName = '';
 		} else {
-			const newItem = { ...item, id: itemCounter.fetchAndIncrement() };
-			maybeAddMod(newItem.mod);
+			const newItem = {
+				...item,
+				id: itemCounter.fetchAndIncrement(),
+				mod: maybeAddMod(item.mod)
+			};
+			// maybeAddMod(newItem.mod);
 			itemStore.append(newItem);
 			item = { name: '', type: '', recipes: [] };
+			modName = '';
 		}
 	};
 
 	const maybeAddMod = (mod?: number) => {
 		if (!mod) {
-			modStore.append({ id: modCounter.fetchAndIncrement(), name: modName });
+			const newModId = modCounter.fetchAndIncrement();
+			modStore.append({ id: newModId, name: modName });
+			console.log($modStore);
+			return newModId;
 		}
+		return mod;
 	};
 </script>
 
