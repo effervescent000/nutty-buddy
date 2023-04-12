@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  Item        Item[]
+  Mod         Mod[]
+  Method      Method[]
+  Recipe      Recipe[]
+  Requirement Requirement[]
+}
+
+model Item {
+  id       Int    @id @default(autoincrement())
+  name     String
+  type     String
+  quantity Int?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  modId      Int
+  mod        Mod                @relation(fields: [modId], references: [id])
+  usedIn     RecipeComponents[]
+  producedBy RecipeOutput[]
+}
+
+model Mod {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  items Item[]
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Method {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  userId        Int
+  user          User            @relation(fields: [userId], references: [id])
+  RecipeMethods RecipeMethods[]
+}
+
+model Recipe {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  components         RecipeComponents[]
+  produces           RecipeOutput[]
+  methods            RecipeMethods[]
+  RecipeRequirements RecipeRequirements[]
+}
+
+model RecipeMethods {
+  methodId Int
+  method   Method @relation(fields: [methodId], references: [id])
+  recipeId Int
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+
+  @@id([methodId, recipeId])
+}
+
+model RecipeComponents {
+  itemId   Int
+  item     Item   @relation(fields: [itemId], references: [id])
+  recipeId Int
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+
+  @@id([itemId, recipeId])
+}
+
+model RecipeOutput {
+  itemId   Int
+  item     Item   @relation(fields: [itemId], references: [id])
+  recipeId Int
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+
+  @@id([itemId, recipeId])
+}
+
+model Requirement {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  RecipeRequirements RecipeRequirements[]
+}
+
+model RecipeRequirements {
+  requirementId Int
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+  recipeId      Int
+  recipe        Recipe      @relation(fields: [recipeId], references: [id])
+
+  @@id([recipeId, requirementId])
+}
