@@ -35,19 +35,19 @@
 		if (typeof window !== 'undefined') {
 			try {
 				itemStore.set(JSON.parse(localStorage.getItem(ITEMS) || '[]'));
-				itemCounter.set(+(localStorage.getItem(ITEM_COUNTER) || 0));
+				itemCounter.set(+(localStorage.getItem(ITEM_COUNTER) || 1));
 				modStore.set(JSON.parse(localStorage.getItem(MODS) || '[]'));
-				modCounter.set(+(localStorage.getItem(MOD_COUNTER) || 0));
+				modCounter.set(+(localStorage.getItem(MOD_COUNTER) || 1));
 				recipeStore.set(JSON.parse(localStorage.getItem(RECIPES) || '[]'));
-				recipeCounter.set(+(localStorage.getItem(RECIPE_COUNTER) || 0));
+				recipeCounter.set(+(localStorage.getItem(RECIPE_COUNTER) || 1));
 				requirementStore.set(
 					JSON.parse(localStorage.getItem(REQUIREMENTS) || '[]')
 				);
 				requirementCounter.set(
-					+(localStorage.getItem(REQUIREMENT_COUNTER) || 0)
+					+(localStorage.getItem(REQUIREMENT_COUNTER) || 1)
 				);
 				methodStore.set(JSON.parse(localStorage.getItem(METHODS) || '[]'));
-				methodsCounter.set(+(localStorage.getItem(METHOD_COUNTER) || 0));
+				methodsCounter.set(+(localStorage.getItem(METHOD_COUNTER) || 1));
 
 				unsubscribeFuncs.push(
 					...[

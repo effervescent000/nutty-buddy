@@ -45,7 +45,7 @@
 			class="bg-off-white rounded-sm border border-green"
 			data-testid={testid}
 			on:input={handleChange}
-			on:blur={() => (showOptions = false)}
+			on:blur={() => setTimeout(() => (showOptions = false), 250)}
 		/>
 		{#if showOptions}
 			<ul
