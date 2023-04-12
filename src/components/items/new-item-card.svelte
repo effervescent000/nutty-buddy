@@ -8,7 +8,7 @@
 		modsById
 	} from '../../stores';
 
-	import type { IItem, IMod } from '../../typing/interfaces';
+	import type { IItem } from '../../typing/interfaces';
 
 	import { ITEM_TYPES } from '../../constants/item-constants';
 

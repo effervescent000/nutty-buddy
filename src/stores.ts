@@ -5,7 +5,8 @@ import type {
 	IItem,
 	IRecipe,
 	IRequirement,
-	IMinimalItem
+	IMinimalItem,
+	IMethod
 } from './typing/interfaces';
 
 import { createCounterFuncs, createStoreFuncs } from './utils/store-utils';
@@ -36,6 +37,10 @@ const createCounterStore = () => {
 // STORES
 // ********************
 
+export const focusedItem = writable<IItem | undefined>(undefined);
+
+// CUSTOM STORES
+
 export const itemStore = createMinimalItemStore<IItem>();
 export const itemsById = derived(itemStore, ($itemStore) =>
 	makeLookupById($itemStore)
@@ -60,4 +65,8 @@ export const modsById = derived(modStore, ($modStore) =>
 );
 export const modCounter = createCounterStore();
 
-export const focusedItem = writable<IItem | undefined>(undefined);
+export const methodStore = createMinimalItemStore<IMethod>();
+export const methodsById = derived(methodStore, ($methodStore) =>
+	makeLookupById($methodStore)
+);
+export const methodsCounter = createCounterStore();
