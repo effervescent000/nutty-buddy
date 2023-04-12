@@ -33,7 +33,24 @@
 
 	onMount(() => {
 		if (typeof window !== 'undefined') {
-			// load from local storage here
+			try {
+				itemStore.set(JSON.parse(localStorage.getItem(ITEMS) || '[]'));
+				itemCounter.set(+(localStorage.getItem(ITEM_COUNTER) || 0));
+				modStore.set(JSON.parse(localStorage.getItem(MODS) || '[]'));
+				modCounter.set(+(localStorage.getItem(MOD_COUNTER) || 0));
+				recipeStore.set(JSON.parse(localStorage.getItem(RECIPES) || '[]'));
+				recipeCounter.set(+(localStorage.getItem(RECIPE_COUNTER) || 0));
+				requirementStore.set(
+					JSON.parse(localStorage.getItem(REQUIREMENTS) || '[]')
+				);
+				requirementCounter.set(
+					+(localStorage.getItem(REQUIREMENT_COUNTER) || 0)
+				);
+				methodStore.set(JSON.parse(localStorage.getItem(METHODS) || '[]'));
+				methodsCounter.set(+(localStorage.getItem(METHOD_COUNTER) || 0));
+			} catch (error) {
+				console.log('Error getting local storage, please clear it');
+			}
 
 			unsubscribeFuncs.push(
 				...[

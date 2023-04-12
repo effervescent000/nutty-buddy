@@ -21,6 +21,7 @@ const createMinimalItemStore = <T extends IMinimalItem>() => {
 
 	return {
 		subscribe: store.subscribe,
+		set: store.set,
 		...createStoreFuncs<T>(store)
 	};
 };
@@ -29,6 +30,7 @@ const createCounterStore = () => {
 	const store = writable(0);
 	return {
 		subscribe: store.subscribe,
+		set: store.set,
 		...createCounterFuncs(store)
 	};
 };
