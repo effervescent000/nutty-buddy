@@ -14,6 +14,7 @@
 		requirementCounter,
 		requirementStore
 	} from '../stores';
+	import Login from '../users/login.svelte';
 
 	// SOME USEFUL CONSTANTS
 	const ITEMS = 'items';
@@ -93,5 +94,9 @@
 		unsubscribeFuncs.forEach((func) => func());
 	});
 </script>
+
+<div class="flex justify-end">
+	<Login />
+</div>
 
 <slot />

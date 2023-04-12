@@ -6,8 +6,12 @@ import { db } from '../../../db.server.js';
 import { wrapData } from '../../../utils/general-utils.js';
 
 export const POST = async ({ request }) => {
-	const { username } = await request.json();
+	const data = await request.formData();
+	const username = data.get('username')?.toString();
 
-	const user = await db.user.create({ data: { name: username } });
-	return json(wrapData<IUser>(user));
+	if (username) {
+		const user = await db.user.create({ data: { name: username } });
+		return json(wrapData<IUser>(user));
+	}
+	return json(null);
 };
