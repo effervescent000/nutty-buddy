@@ -14,6 +14,7 @@
 		requirementCounter,
 		requirementStore
 	} from '../stores';
+	import Login from '../users/login.svelte';
 
 	// SOME USEFUL CONSTANTS
 	const ITEMS = 'items';
@@ -94,4 +95,5 @@
 	});
 </script>
 
+<Login />
 <slot />

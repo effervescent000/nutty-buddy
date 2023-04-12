@@ -15,7 +15,7 @@
 	import AutoComplete from '../common/auto-complete.svelte';
 	import Button from '../common/button.svelte';
 	import Select from '../common/select.svelte';
-	import TextInput from '../common/text-input.svelte';
+	import TextInput from '../common/controlled-text-input.svelte';
 
 	// PROPS
 
