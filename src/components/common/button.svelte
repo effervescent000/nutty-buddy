@@ -1,6 +1,7 @@
 <script lang="ts">
 	// PROPS
-	export let callback = (event?: Event) => {};
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	export let callback = () => {};
 	export let testid = '';
 	export let type: 'submit' | 'button' | undefined = 'button';
 	// STATE

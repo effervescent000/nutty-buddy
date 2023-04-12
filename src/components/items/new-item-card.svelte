@@ -21,7 +21,7 @@
 
 	// STATE
 	let item: IItem;
-	let modName: string = '';
+	let modName = '';
 
 	// LOGIC
 
@@ -37,7 +37,7 @@
 		value: mod.id as number
 	}));
 
-	const maybeUpdateFocusedItem = (key: string, newVal: any) => {
+	const maybeUpdateFocusedItem = <T>(key: string, newVal: T) => {
 		if ($focusedItem) {
 			focusedItem.update((curItem) =>
 				curItem ? { ...curItem, [key]: newVal } : undefined

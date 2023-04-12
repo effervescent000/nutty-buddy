@@ -15,6 +15,6 @@ test.describe('tests re: inputting items', () => {
 		await expect(page.getByTestId('new-item-mod')).toHaveValue('');
 		await expect(page.getByTestId('auto-complete-popout')).not.toBeVisible();
 
-		await expect(page.getByTestId('mini-card-0')).toBeVisible();
+		await expect(page.getByTestId('mini-card-1')).toBeVisible();
 	});
 });
