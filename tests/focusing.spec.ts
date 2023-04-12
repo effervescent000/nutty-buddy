@@ -12,7 +12,7 @@ test.describe('tests re: focusing', () => {
 		await page.getByTestId('new-item-mod').type('testing 456', { delay: 50 });
 		await page.getByTestId('new-item-save').click();
 
-		await page.getByTestId('mini-card-0').getByTestId('focus-item').click();
+		await page.getByTestId('mini-card-1').getByTestId('focus-item').click();
 		await expect(page.getByTestId('new-item-name')).toHaveValue('testing 123');
 	});
 
@@ -24,10 +24,10 @@ test.describe('tests re: focusing', () => {
 		await page.getByTestId('new-item-save').click();
 		await expect(page.getByTestId('new-item-name')).toHaveValue('');
 
-		await page.getByTestId('mini-card-0').getByTestId('focus-item').click();
+		await page.getByTestId('mini-card-1').getByTestId('focus-item').click();
 		await page.getByTestId('new-item-name').type('345', { delay: 50 });
 		await page.getByTestId('new-item-save').click();
 
-		await expect(page.getByTestId('mini-card-0')).toHaveText('345testing 123');
+		await expect(page.getByTestId('mini-card-1')).toHaveText('345testing 123');
 	});
 });
