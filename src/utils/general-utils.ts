@@ -8,3 +8,5 @@ export const makeLookupById = <T extends IMinimalItem>(list: T[]) =>
 		(acc, cur) => ({ ...acc, [cur['id'] as number]: cur }),
 		{} as { [id: number]: T }
 	);
+
+export const wrapData = <T>(data: T) => ({ data });
