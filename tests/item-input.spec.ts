@@ -12,6 +12,8 @@ test.describe('tests re: inputting items', () => {
 		await page.getByTestId('new-item-save').click();
 		// clicking the save button should also clear out the item values
 		await expect(page.getByTestId('new-item-name')).toHaveValue('');
+		await expect(page.getByTestId('new-item-mod')).toHaveValue('');
+		await expect(page.getByTestId('auto-complete-popout')).not.toBeVisible();
 
 		await expect(page.getByTestId('mini-card-0')).toBeVisible();
 	});
