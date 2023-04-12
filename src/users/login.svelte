@@ -19,7 +19,12 @@
 <form method="post" on:submit={handleSubmit}>
 	<label for="username">
 		<span>Username: </span>
-		<UncontrolledTextInput id="username" name="username" autocomplete="off" />
+		<UncontrolledTextInput
+			id="username"
+			name="username"
+			autocomplete="off"
+			testid="login-input"
+		/>
 	</label>
-	<Button type="submit">Login</Button>
+	<Button type="submit" testid="login-submit">Login</Button>
 </form>

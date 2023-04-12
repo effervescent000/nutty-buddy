@@ -15,7 +15,8 @@ export const POST = async ({ request, cookies }) => {
 		if (!user) {
 			user = await db.user.create({ data: { name: username } });
 		}
-		cookies.set('userId', user.id.toString());
+		console.log(`setting cookie with value ${user.id}`);
+		cookies.set('userId', user.id.toString(), { httpOnly: false });
 
 		return json(wrapData<IUser>(user));
 	}
