@@ -95,5 +95,8 @@
 	});
 </script>
 
-<Login />
+<div class="flex justify-end">
+	<Login />
+</div>
+
 <slot />
