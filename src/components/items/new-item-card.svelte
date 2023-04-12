@@ -70,7 +70,6 @@
 		if (!mod) {
 			const newModId = modCounter.fetchAndIncrement();
 			modStore.append({ id: newModId, name: modName });
-			console.log($modStore);
 			return newModId;
 		}
 		return mod;
