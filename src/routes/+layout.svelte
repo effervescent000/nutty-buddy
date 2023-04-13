@@ -12,9 +12,12 @@
 		recipeCounter,
 		recipeStore,
 		requirementCounter,
-		requirementStore
+		requirementStore,
+		userIdStore
 	} from '../stores';
 	import Login from '../users/login.svelte';
+
+	export let data;
 
 	// SOME USEFUL CONSTANTS
 	const ITEMS = 'items';
@@ -87,6 +90,7 @@
 			} catch (error) {
 				console.log('Error getting local storage, please clear it');
 			}
+			userIdStore.set(data.userId ? +data.userId : undefined);
 		}
 	});
 
@@ -95,8 +99,10 @@
 	});
 </script>
 
-<div class="flex justify-end">
-	<Login />
-</div>
+{#if !$userIdStore}
+	<div class="flex justify-end">
+		<Login />
+	</div>
+{/if}
 
 <slot />

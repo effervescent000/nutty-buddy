@@ -72,3 +72,5 @@ export const methodsById = derived(methodStore, ($methodStore) =>
 	makeLookupById($methodStore)
 );
 export const methodsCounter = createCounterStore();
+
+export const userIdStore = writable<number | undefined>();
