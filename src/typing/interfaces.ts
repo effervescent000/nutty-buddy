@@ -16,7 +16,6 @@ export interface IItem {
 	name: string;
 	type: TItemType;
 	mod?: IMod;
-	recipes: number[];
 	quantityOwned?: number;
 }
 

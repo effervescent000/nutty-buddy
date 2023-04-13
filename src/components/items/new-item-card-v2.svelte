@@ -1,14 +1,15 @@
 <script lang="ts">
-	import type { IModRead } from '../../typing/interfaces';
-
 	import { ITEM_TYPES } from '../../constants/item-constants';
 
 	import Button from '../common/button.svelte';
 	import UncontrolledAutoComplete from '../common/uncontrolled-auto-complete.svelte';
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import UncontrolledTextInput from '../common/uncontrolled-text-input.svelte';
+	import type { Mod } from '@prisma/client';
 
 	// PROPS
+
+	export let mods: Mod[];
 
 	// STATE
 
@@ -19,7 +20,7 @@
 		value: type
 	}));
 
-	const modOptions: IModRead[] = [];
+	const modOptions = mods;
 </script>
 
 <form method="post">

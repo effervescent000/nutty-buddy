@@ -1,8 +1,18 @@
 import { db } from '../../db.server.js';
+import { getNumericUserIdFromCookies } from '../../utils/api-utils.js';
 import {
 	coerceFormDataEntryToNumber,
 	wrapData
 } from '../../utils/general-utils.js';
+
+export const load = async ({ cookies }) => {
+	const userId = getNumericUserIdFromCookies(cookies);
+	if (userId !== undefined) {
+		const mods = await db.mod.findMany({ where: { userId } });
+		return wrapData(mods);
+	}
+	return wrapData([]);
+};
 
 export const actions = {
 	default: async ({ request, cookies }) => {

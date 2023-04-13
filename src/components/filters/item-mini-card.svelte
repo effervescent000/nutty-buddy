@@ -1,12 +1,11 @@
 <script lang="ts">
+	import type { Item } from '@prisma/client';
 	import { focusedItem } from '../../stores';
-
-	import type { IItem } from '../../typing/interfaces';
 
 	import Icon from '../common/icon.svelte';
 
 	// PROPS
-	export let item: IItem;
+	export let item: Item;
 
 	// STATE
 
