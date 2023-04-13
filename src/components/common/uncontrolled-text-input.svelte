@@ -4,10 +4,10 @@
 	export let testid = '';
 	export let id: string | undefined = undefined;
 	export let name: string | undefined = undefined;
-	export let autocomplete: string | undefined = undefined;
+	export let initialValue: string | undefined = undefined;
 
 	// STATE
-	let value = '';
+	let value = initialValue || '';
 </script>
 
 {#if label}
@@ -18,6 +18,6 @@
 	{id}
 	{name}
 	data-testid={testid}
-	{autocomplete}
+	autocomplete="off"
 	class="bg-off-white rounded-sm border border-green"
 />
