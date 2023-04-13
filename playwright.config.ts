@@ -5,7 +5,8 @@ const config: PlaywrightTestConfig = {
 		command: 'npm run build && npm run preview',
 		port: 4173,
 		env: {
-			VITE_ROOT_URL: 'http://localhost:4173'
+			VITE_ROOT_URL: 'http://localhost:4173',
+			DATABASE_URL: 'file:./dev.db'
 		}
 	},
 	testDir: 'tests',
