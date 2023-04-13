@@ -12,7 +12,7 @@
 	// LOGIC
 </script>
 
-<div data-testid={`mini-card-${item.id}`} class="flex">
+<div data-testid={`mini-card-${item.name}`} class="flex">
 	<span>{item.name}</span>
 	<div>
 		<Icon

@@ -34,6 +34,7 @@
 	<UncontrolledAutoComplete
 		label="Mod"
 		nameName="mod-name"
+		testid="new-item-mod"
 		idName="mod-id"
 		options={modOptions}
 	/>
