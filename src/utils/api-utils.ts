@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { json, type Cookies } from '@sveltejs/kit';
 import { userIdStore } from '../stores';
 import { get } from 'svelte/store';
 
@@ -56,4 +56,9 @@ export const parseCookies = (cookies: string | null) => {
 		);
 
 	return result;
+};
+
+export const getNumericUserIdFromCookies = (cookies: Cookies) => {
+	const userId = cookies.get('userId');
+	return userId !== undefined ? +userId : undefined;
 };

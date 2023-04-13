@@ -44,6 +44,7 @@
 			data-testid={testid}
 			on:input={handleChange}
 			on:blur={() => setTimeout(() => (showOptions = false), 250)}
+			autocomplete="off"
 		/>
 		<input type="hidden" name={idName} bind:value={idValue} />
 		{#if showOptions}
