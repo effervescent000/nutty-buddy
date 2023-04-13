@@ -1,12 +1,13 @@
 <script lang="ts">
 	// PROPS
+	export let initialValue = '';
 	export let options: { value: string; name: string }[];
 	export let label = '';
 	export let testid = '';
 	export let name: string;
 
 	// STATE
-	let value = '';
+	let value = initialValue;
 </script>
 
 <div>

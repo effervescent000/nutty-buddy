@@ -5,4 +5,4 @@
 </script>
 
 <slot />
-<ItemsWrapper items={data.data} />
+<ItemsWrapper items={data.data.items} />

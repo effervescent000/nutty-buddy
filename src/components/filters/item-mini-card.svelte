@@ -14,12 +14,8 @@
 <div data-testid={`mini-card-${item.name}`} class="flex">
 	<span>{item.name}</span>
 	<div>
-		<Icon
-			icon="expand"
-			callback={() => {
-				// EMPTY
-			}}
-			testid="focus-item"
-		/>
+		<a href={`/items/${item.id}`}>
+			<Icon icon="expand" />
+		</a>
 	</div>
 </div>

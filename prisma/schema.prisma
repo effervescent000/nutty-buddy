@@ -30,8 +30,9 @@ model Item {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  modId      Int?
-  mod        Mod?               @relation(fields: [modId], references: [id])
+  modId Int?
+  mod   Mod? @relation(fields: [modId], references: [id])
+
   usedIn     RecipeComponents[]
   producedBy RecipeOutput[]
 }

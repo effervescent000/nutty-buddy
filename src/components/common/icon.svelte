@@ -1,7 +1,9 @@
 <script lang="ts">
 	// PROPS
 	export let icon: string;
-	export let callback: () => void;
+	export let callback = () => {
+		// this doesn't do anything
+	};
 	export let classes = '';
 	export let testid = '';
 

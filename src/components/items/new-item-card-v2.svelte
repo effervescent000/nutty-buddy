@@ -19,8 +19,6 @@
 		name: type,
 		value: type
 	}));
-
-	const modOptions = mods;
 </script>
 
 <form method="post">
@@ -36,7 +34,7 @@
 		nameName="mod-name"
 		testid="new-item-mod"
 		idName="mod-id"
-		options={modOptions}
+		options={mods}
 	/>
 	<Button testid="new-item-save" type="submit">Save</Button>
 </form>
