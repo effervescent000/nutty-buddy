@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Item } from '@prisma/client';
-	import { focusedItem } from '../../stores';
 
 	import Icon from '../common/icon.svelte';
 
@@ -15,10 +14,6 @@
 <div data-testid={`mini-card-${item.name}`} class="flex">
 	<span>{item.name}</span>
 	<div>
-		<Icon
-			icon="expand"
-			callback={() => focusedItem.set(item)}
-			testid="focus-item"
-		/>
+		<Icon icon="expand" callback={() => {}} testid="focus-item" />
 	</div>
 </div>
