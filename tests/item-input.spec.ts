@@ -8,7 +8,8 @@ test.describe('tests re: inputting items', () => {
 	});
 
 	test('can persist a new item', async ({ page }) => {
-		await page.getByTestId('new-item-name').type('testing 123', { delay: 50 });
+		const newItemName = `item ${Math.round(Math.random() * 100_000)}`;
+		await page.getByTestId('new-item-name').type(newItemName, { delay: 50 });
 		await page.getByTestId('new-item-type').selectOption('item');
 		await page.getByTestId('new-item-mod').type('testing 456', { delay: 50 });
 		await page.getByTestId('new-item-save').click();
@@ -16,6 +17,6 @@ test.describe('tests re: inputting items', () => {
 		await expect(page.getByTestId('new-item-mod')).toHaveValue('');
 		await expect(page.getByTestId('auto-complete-popout')).not.toBeVisible();
 
-		await expect(page.getByTestId('mini-card-testing 123')).toBeVisible();
+		await expect(page.getByTestId(`mini-card-${newItemName}`)).toBeVisible();
 	});
 });
