@@ -15,7 +15,7 @@ export const POST = async ({ request, cookies }) => {
 		if (!user) {
 			user = await db.user.create({ data: { name: username } });
 		}
-		cookies.set('userId', user.id.toString(), { httpOnly: false });
+		cookies.set('userId', user.id.toString(), { httpOnly: false, path: '/' });
 
 		return json(wrapData<IUser>(user));
 	}

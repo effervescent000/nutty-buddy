@@ -17,6 +17,8 @@
 	} from '../stores';
 	import Login from '../users/login.svelte';
 
+	export let data;
+
 	// SOME USEFUL CONSTANTS
 	const ITEMS = 'items';
 	const ITEM_COUNTER = 'itemCounter';
@@ -88,6 +90,7 @@
 			} catch (error) {
 				console.log('Error getting local storage, please clear it');
 			}
+			userIdStore.set(data.userId ? +data.userId : undefined);
 		}
 	});
 
