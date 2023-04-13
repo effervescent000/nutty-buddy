@@ -14,6 +14,12 @@
 <div data-testid={`mini-card-${item.name}`} class="flex">
 	<span>{item.name}</span>
 	<div>
-		<Icon icon="expand" callback={() => {}} testid="focus-item" />
+		<Icon
+			icon="expand"
+			callback={() => {
+				// EMPTY
+			}}
+			testid="focus-item"
+		/>
 	</div>
 </div>
