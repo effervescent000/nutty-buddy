@@ -12,7 +12,8 @@
 		recipeCounter,
 		recipeStore,
 		requirementCounter,
-		requirementStore
+		requirementStore,
+		userIdStore
 	} from '../stores';
 	import Login from '../users/login.svelte';
 
@@ -95,8 +96,10 @@
 	});
 </script>
 
-<div class="flex justify-end">
-	<Login />
-</div>
+{#if !$userIdStore}
+	<div class="flex justify-end">
+		<Login />
+	</div>
+{/if}
 
 <slot />

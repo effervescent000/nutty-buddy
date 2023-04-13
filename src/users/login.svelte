@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { userIdStore } from '../stores';
+
+	import { URLS } from '../constants/url-constants';
+	import { POST } from '../utils/api-utils';
+
 	import Button from '../components/common/button.svelte';
 	import UncontrolledTextInput from '../components/common/uncontrolled-text-input.svelte';
-	import { URLS } from '../constants/url-constants';
-
-	import { POST } from '../utils/api-utils';
 
 	// LOGIC
 	const handleSubmit = async (event: SubmitEvent) => {
@@ -11,7 +13,7 @@
 		if (event.target) {
 			const formData = new FormData(event.target as HTMLFormElement);
 			const result = await POST(URLS.USERS, formData);
-			console.log(result);
+			userIdStore.set(result?.data?.id);
 		}
 	};
 </script>
