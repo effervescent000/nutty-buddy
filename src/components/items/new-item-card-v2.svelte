@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IItem, IModRead } from '../../typing/interfaces';
+	import type { IModRead } from '../../typing/interfaces';
 
 	import { ITEM_TYPES } from '../../constants/item-constants';
 
