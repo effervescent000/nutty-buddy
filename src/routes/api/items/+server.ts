@@ -3,8 +3,8 @@ import { json } from '@sveltejs/kit';
 import { db } from '../../../db.server.js';
 import { wrapData } from '../../../utils/general-utils.js';
 
-export const POST = async ({ request, cookies }) => {
-	const userId = cookies.get('userId');
+export const POST = async ({ request }) => {
+	const userId = request.headers.get('User-Id');
 	const data = await request.formData();
 
 	const itemId = +(data.get('id')?.toString || 0);
@@ -38,8 +38,9 @@ export const POST = async ({ request, cookies }) => {
 	}
 };
 
-export const GET = async ({ cookies }) => {
-	const userId = cookies.get('userId');
+export const GET = async ({ request }) => {
+	const userId = request.headers.get('User-Id');
+	console.log(`user id ${userId} found`);
 	if (userId) {
 		const items = await db.item.findMany({ where: { userId: +userId } });
 		return json(wrapData(items));

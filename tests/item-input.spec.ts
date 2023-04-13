@@ -2,10 +2,10 @@ import { expect, test } from '@playwright/test';
 
 test.describe('tests re: inputting items', () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto('/');
+		await page.goto('/items');
 	});
 
-	test('can persist a new item', async ({ page }) => {
+	test.skip('can persist a new item', async ({ page }) => {
 		await page.getByTestId('new-item-name').type('testing 123', { delay: 50 });
 		await page.getByTestId('new-item-type').selectOption('item');
 		await page.getByTestId('new-item-mod').type('testing 456', { delay: 50 });

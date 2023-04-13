@@ -1,36 +1,41 @@
 import type { TItemType } from './types';
 
-export interface IMinimalItem {
-	id?: number;
-}
-
-export interface IUser extends IMinimalItem {
+export interface IUser {
 	name: string;
 }
 
-export interface IMod extends IMinimalItem {
+export interface IMod {
 	name: string;
 }
 
-export interface IItem extends IMinimalItem {
+export interface IModRead extends IMod {
+	id: number;
+}
+
+export interface IItem {
 	name: string;
 	type: TItemType;
-	mod?: number;
+	mod?: IMod;
 	recipes: number[];
 	quantityOwned?: number;
 }
 
-export interface IRecipe extends IMinimalItem {
+export interface IItemRead extends IItem {
+	id: number;
+	mod?: IModRead;
+}
+
+export interface IRecipe {
 	components: [id: number, quantity: number][];
 	results: [id: number, quantity: number][];
 	requires: number[];
 }
 
-export interface IRequirement extends IMinimalItem {
+export interface IRequirement {
 	name: string;
 	complete: boolean;
 }
 
-export interface IMethod extends IMinimalItem {
+export interface IMethod {
 	name: string;
 }

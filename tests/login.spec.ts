@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe('tests re: logging in', () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto('/');
+		await page.goto('/items');
 	});
 
 	test('can login and set the user store', async ({ page }) => {
