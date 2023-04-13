@@ -37,3 +37,12 @@ export const POST = async ({ request, cookies }) => {
 		return json(null);
 	}
 };
+
+export const GET = async ({ cookies }) => {
+	const userId = cookies.get('userId');
+	if (userId) {
+		const items = await db.item.findMany({ where: { userId: +userId } });
+		return json(wrapData(items));
+	}
+	return json(null);
+};
