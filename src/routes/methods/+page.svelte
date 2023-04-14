@@ -17,6 +17,7 @@
 			name="name"
 			testid="new-method-name"
 			label="Method name"
+			required
 		/>
 		<!-- intentionally leaving this as an untyped button so it 
     defaults to type="button". we're not ready to submit yet. -->

@@ -1,17 +1,11 @@
-import type { Requirement } from '@prisma/client';
 import { db } from '../../db.server.js';
-import {
-	getNumericUserIdFromCookies,
-	validateUser
-} from '../../utils/api-utils.js';
+import { validateUser } from '../../utils/api-utils.js';
 import { coerceFormDataEntryToNumber } from '../../utils/general-utils.js';
 
 export const load = async ({ cookies }) => {
-	const userId = getNumericUserIdFromCookies(cookies);
-	let requirements: Requirement[] = [];
-	if (userId) {
-		requirements = await db.requirement.findMany({ where: { userId } });
-	}
+	const userId = validateUser(cookies);
+
+	const requirements = await db.requirement.findMany({ where: { userId } });
 	return { requirements };
 };
 
