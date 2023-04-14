@@ -32,7 +32,11 @@ export interface IRecipe {
 
 export interface IRequirement {
 	name: string;
-	complete: boolean;
+	completed: boolean;
+}
+
+export interface IRequirementRead extends IRequirement {
+	id: number;
 }
 
 export interface IMethod {
