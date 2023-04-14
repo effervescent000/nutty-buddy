@@ -4,6 +4,7 @@ import {
 	getNumericUserIdFromCookies,
 	validateUser
 } from '../../utils/api-utils.js';
+import { coerceFormDataEntryToNumber } from '../../utils/general-utils.js';
 
 export const load = async ({ cookies }) => {
 	const userId = getNumericUserIdFromCookies(cookies);
@@ -28,5 +29,16 @@ export const actions = {
 			}
 		});
 		return { requirement: req };
+	},
+	update: async ({ request, cookies }) => {
+		validateUser(cookies);
+		const formData = await request.formData();
+		const id = coerceFormDataEntryToNumber(formData.get('req-id')) as number;
+		const completed = formData.get('completed') === 'on' ? true : false;
+		const updatedReq = await db.requirement.update({
+			where: { id },
+			data: { completed }
+		});
+		return updatedReq;
 	}
 };
