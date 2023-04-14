@@ -82,6 +82,7 @@ model RecipeComponents {
   item     Item   @relation(fields: [itemId], references: [id])
   recipeId Int
   recipe   Recipe @relation(fields: [recipeId], references: [id])
+  quantity Int    @default(1)
 
   @@id([itemId, recipeId])
 }
@@ -91,6 +92,7 @@ model RecipeOutput {
   item     Item   @relation(fields: [itemId], references: [id])
   recipeId Int
   recipe   Recipe @relation(fields: [recipeId], references: [id])
+  quantity Int    @default(1)
 
   @@id([itemId, recipeId])
 }
