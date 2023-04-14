@@ -1,4 +1,4 @@
-import { json, type Cookies } from '@sveltejs/kit';
+import { json, type Cookies, error } from '@sveltejs/kit';
 import { userIdStore } from '../stores';
 import { get } from 'svelte/store';
 
@@ -61,4 +61,12 @@ export const parseCookies = (cookies: string | null) => {
 export const getNumericUserIdFromCookies = (cookies: Cookies) => {
 	const userId = cookies.get('userId');
 	return userId !== undefined ? +userId : undefined;
+};
+
+export const validateUser = (cookies: Cookies) => {
+	const userId = getNumericUserIdFromCookies(cookies);
+	if (!userId) {
+		throw error(401, 'not logged in');
+	}
+	return userId;
 };

@@ -17,5 +17,5 @@
 <form method="post">
 	<div><span>New requirement</span></div>
 	<UncontrolledTextInput label="Name" name="req-name" testid="req-name" />
-	<Button type="submit">Save</Button>
+	<Button type="submit" testid="req-submit">Save</Button>
 </form>
