@@ -2,9 +2,13 @@
 	import { onMount } from 'svelte';
 
 	import '../app.css';
-	import { userIdStore } from '../stores';
-	import Login from '../users/login.svelte';
 
+	import { userIdStore } from '../stores';
+
+	import Login from '../users/login.svelte';
+	import NavBar from '../components/nav/nav-bar.svelte';
+
+	// PROPS
 	export let data;
 
 	// LOGIC
@@ -16,10 +20,11 @@
 	});
 </script>
 
-{#if !$userIdStore}
-	<div class="flex justify-end">
+<div class="flex justify-between">
+	<NavBar />
+	{#if !$userIdStore}
 		<Login />
-	</div>
-{/if}
+	{/if}
+</div>
 
 <slot />
