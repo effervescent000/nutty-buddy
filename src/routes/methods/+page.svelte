@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '../../components/common/button.svelte';
 	import UncontrolledTextInput from '../../components/common/uncontrolled-text-input.svelte';
+	import MethodCard from '../../components/methods/method-card.svelte';
 
 	// PROPS
 	export let data;
@@ -10,16 +11,19 @@
 	// LOGIC
 </script>
 
-<form method="post">
+<form method="post" action="?/create">
 	<span>New method</span>
 	<div>
 		<UncontrolledTextInput
 			name="name"
 			testid="new-method-name"
 			label="Method name"
+			required
 		/>
-		<!-- intentionally leaving this as an untyped button so it 
-    defaults to type="button". we're not ready to submit yet. -->
-		<Button testid="method-submit">Save</Button>
+		<Button testid="method-submit" type="submit">Save</Button>
 	</div>
 </form>
+
+{#each data.methods as method}
+	<MethodCard {method} />
+{/each}
