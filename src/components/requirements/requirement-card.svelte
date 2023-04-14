@@ -6,6 +6,7 @@
 	export let requirement: IRequirementRead;
 
 	// STATE
+	let form: HTMLFormElement;
 
 	// LOGIC
 </script>
@@ -14,6 +15,14 @@
 	data-testid={`req-card-${requirement.name}`}
 	class="border border-green m-2 p-1"
 >
-	<Checkbox name="completed" initialValue={requirement.completed} />
-	<span>{requirement.name}</span>
+	<form method="post" action="?/update" bind:this={form}>
+		<Checkbox
+			name="completed"
+			initialValue={requirement.completed}
+			onChange={() => form.requestSubmit()}
+		/>
+		<span>{requirement.name}</span>
+		<input type="hidden" name="req-id" value={requirement.id} />
+		<input type="hidden" name="req-name" value={requirement.name} />
+	</form>
 </div>
