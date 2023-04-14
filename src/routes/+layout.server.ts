@@ -1,3 +1,3 @@
-export const load = ({ cookies }) => {
+export const load = async ({ cookies }) => {
 	return { userId: cookies.get('userId') };
 };

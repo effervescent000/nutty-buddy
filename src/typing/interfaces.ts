@@ -42,3 +42,7 @@ export interface IRequirementRead extends IRequirement {
 export interface IMethod {
 	name: string;
 }
+
+export interface IMethodRead extends IMethod {
+	id: number;
+}

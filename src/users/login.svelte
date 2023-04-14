@@ -6,6 +6,7 @@
 
 	import Button from '../components/common/button.svelte';
 	import UncontrolledTextInput from '../components/common/uncontrolled-text-input.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	// LOGIC
 	const handleSubmit = async (event: SubmitEvent) => {
@@ -13,6 +14,7 @@
 		if (event.target) {
 			const formData = new FormData(event.target as HTMLFormElement);
 			const result = await POST(URLS.USERS, formData);
+			invalidateAll();
 			userIdStore.set(result?.data?.id);
 		}
 	};
@@ -21,12 +23,7 @@
 <form method="post" on:submit={handleSubmit}>
 	<label for="username">
 		<span>Username: </span>
-		<UncontrolledTextInput
-			id="username"
-			name="username"
-			autocomplete="off"
-			testid="login-input"
-		/>
+		<UncontrolledTextInput id="username" name="username" testid="login-input" />
 	</label>
 	<Button type="submit" testid="login-submit">Login</Button>
 </form>
