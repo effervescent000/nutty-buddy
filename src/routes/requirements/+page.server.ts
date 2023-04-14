@@ -15,7 +15,7 @@ export const load = async ({ cookies }) => {
 };
 
 export const actions = {
-	default: async ({ request, cookies }) => {
+	create: async ({ request, cookies }) => {
 		const userId = validateUser(cookies);
 		const formData = await request.formData();
 		const name = (formData.get('req-name') as FormDataEntryValue).toString();

@@ -11,7 +11,7 @@
 	// LOGIC
 </script>
 
-<form method="post">
+<form method="post" action="?/create">
 	<div><span>New requirement</span></div>
 	<UncontrolledTextInput label="Name" name="req-name" testid="req-name" />
 	<Button type="submit" testid="req-submit">Save</Button>
