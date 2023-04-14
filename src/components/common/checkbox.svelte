@@ -13,4 +13,10 @@
 {#if label}
 	<span>{label}</span>
 {/if}
-<input type="checkbox" {name} bind:checked />
+<input
+	type="checkbox"
+	{name}
+	bind:checked
+	class="ml-1 rounded text-sm bg-off-white text-purple
+	border-purple focus:ring-green focus:ring-offset-white"
+/>

@@ -10,7 +10,10 @@
 	// LOGIC
 </script>
 
-<div data-testid={`req-card-${requirement.name}`}>
+<div
+	data-testid={`req-card-${requirement.name}`}
+	class="border border-green m-2 p-1"
+>
 	<Checkbox name="completed" initialValue={requirement.completed} />
 	<span>{requirement.name}</span>
 </div>

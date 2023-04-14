@@ -17,6 +17,8 @@
 	<Button type="submit" testid="req-submit">Save</Button>
 </form>
 
-{#each data.requirements as req}
-	<RequirementCard requirement={req} />
-{/each}
+<div class="grid grid-cols-6">
+	{#each data.requirements as req}
+		<RequirementCard requirement={req} />
+	{/each}
+</div>
