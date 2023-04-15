@@ -8,6 +8,7 @@
 	// LOGIC
 	const LINKS: { text: string; path: string }[] = [
 		{ text: 'Item management', path: '/items' },
+		{ text: 'Recipe Management', path: '/recipes' },
 		{ text: 'Method management', path: '/methods' },
 		{ text: 'Requirement management', path: '/requirements' }
 	];
