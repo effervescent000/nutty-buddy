@@ -1,9 +1,12 @@
 <script lang="ts">
 	// PROPS
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	export let callback = () => {};
+	export let callback = () => {
+		// noop
+	};
 	export let testid = '';
 	export let type: 'submit' | 'button' | undefined = 'button';
+	export let classes = '';
+
 	// STATE
 
 	// LOGIC
@@ -13,6 +16,6 @@
 	{type}
 	data-testid={testid}
 	on:click={callback}
-	class="bg-off-white text-purple border border-green px-1 py-0.5"
+	class={`bg-off-white text-purple border border-green px-1 py-0.5 ${classes}`}
 	><slot /></button
 >

@@ -24,10 +24,23 @@ export interface IItemRead extends IItem {
 	mod?: IModRead;
 }
 
-export interface IRecipe {
-	components: [id: number, quantity: number][];
-	results: [id: number, quantity: number][];
-	requires: number[];
+export interface IRecipeRead {
+	id: number;
+	components: IRecipeComponent[];
+	output: IRecipeOutput[];
+	method: IMethodRead;
+}
+
+interface IRecipeComponent {
+	recipe: IRecipeRead;
+	item: IItemRead;
+	quantity: number;
+}
+
+interface IRecipeOutput {
+	recipe: IRecipeRead;
+	item: IItemRead;
+	chance: number;
 }
 
 export interface IRequirement {
@@ -45,4 +58,6 @@ export interface IMethod {
 
 export interface IMethodRead extends IMethod {
 	id: number;
+
+	recipes: IRecipeRead[];
 }
