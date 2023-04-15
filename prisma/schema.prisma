@@ -15,8 +15,8 @@ model User {
   name String @unique
 
   item        Item[]
-  rod         Mod[]
-  rethod      Method[]
+  mod         Mod[]
+  method      Method[]
   recipe      Recipe[]
   requirement Requirement[]
 }
