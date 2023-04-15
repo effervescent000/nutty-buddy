@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import { db } from '../../db.server.js';
 
 import { validateUser } from '../../utils/api-utils.js';
@@ -74,41 +75,53 @@ export const actions = {
 			}
 		});
 
-		const recipe = await db.recipe.create({
-			data: {
-				user: { connect: { id: userId } },
-				method: cleanedFormData.method
-					? {
-							connect: {
-								id: +cleanedFormData.method
+		cleanedFormData.components = cleanedFormData.components.filter(
+			({ itemId }) => !!itemId
+		);
+		cleanedFormData.reqs = cleanedFormData.reqs.filter(({ id }) => !!id);
+		cleanedFormData.output = cleanedFormData.output.filter(
+			({ itemId }) => !!itemId
+		);
+
+		try {
+			const recipe = await db.recipe.create({
+				data: {
+					user: { connect: { id: userId } },
+					method: cleanedFormData.method
+						? {
+								connect: {
+									id: +cleanedFormData.method
+								}
+						  }
+						: undefined,
+					recipeRequirements: {
+						create: cleanedFormData.reqs.map((req) => ({
+							requirement: {
+								connect: { id: req.id }
 							}
-					  }
-					: undefined,
-				recipeRequirements: {
-					create: cleanedFormData.reqs.map((req) => ({
-						requirement: {
-							connect: { id: req.id }
-						}
-					}))
-				},
-				components: {
-					create: cleanedFormData.components.map((comp) => ({
-						quantity: comp.qty || 1,
-						item: {
-							connect: { id: comp.itemId }
-						}
-					}))
-				},
-				produces: {
-					create: cleanedFormData.output.map((out) => ({
-						chance: out.qty,
-						item: {
-							connect: { id: out.itemId }
-						}
-					}))
+						}))
+					},
+					components: {
+						create: cleanedFormData.components.map((comp) => ({
+							quantity: comp.qty || 1,
+							item: {
+								connect: { id: comp.itemId }
+							}
+						}))
+					},
+					output: {
+						create: cleanedFormData.output.map((out) => ({
+							chance: out.qty || 1,
+							item: {
+								connect: { id: out.itemId }
+							}
+						}))
+					}
 				}
-			}
-		});
-		return recipe;
+			});
+			return recipe;
+		} catch (e) {
+			throw error(400, `error creating item, ${e}`);
+		}
 	}
 };

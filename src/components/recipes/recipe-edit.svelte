@@ -21,9 +21,17 @@
 	// STATE
 
 	// LOGIC
+	const methodOptions = data.methods.map(({ id, name }) => ({
+		value: id.toString(),
+		name
+	}));
+	const requirementOptions = data.requirements.map(({ id, name }) => ({
+		value: id.toString(),
+		name
+	}));
 </script>
 
-<form class="flex flex-col items-center">
+<form class="flex flex-col items-center" method="post">
 	<input type="hidden" name="id" value={recipe.id} />
 	<div class="flex gap-4">
 		<ItemInputsWrapper
@@ -35,13 +43,17 @@
 		<div class="self-center">
 			<div>
 				<span>Method</span>
-				<UncontrolledSelect options={[]} name="method" testid="method" />
+				<UncontrolledSelect
+					options={methodOptions}
+					name="method"
+					testid="method"
+				/>
 			</div>
 			<div>
 				<span>Requires?</span>
 				{#each _.range(3) as i}
 					<UncontrolledSelect
-						options={[]}
+						options={requirementOptions}
 						name={`requirement-${i}`}
 						testid={`requirement-${i}`}
 					/>
