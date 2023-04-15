@@ -51,9 +51,10 @@ model Method {
   id   Int    @id @default(autoincrement())
   name String
 
-  userId        Int
-  user          User            @relation(fields: [userId], references: [id])
-  RecipeMethods RecipeMethods[]
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  Recipe Recipe[]
 }
 
 model Recipe {
@@ -62,19 +63,12 @@ model Recipe {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  components         RecipeComponents[]
-  produces           RecipeOutput[]
-  methods            RecipeMethods[]
-  RecipeRequirements RecipeRequirements[]
-}
-
-model RecipeMethods {
   methodId Int
   method   Method @relation(fields: [methodId], references: [id])
-  recipeId Int
-  recipe   Recipe @relation(fields: [recipeId], references: [id])
 
-  @@id([methodId, recipeId])
+  components         RecipeComponents[]
+  produces           RecipeOutput[]
+  RecipeRequirements RecipeRequirements[]
 }
 
 model RecipeComponents {
@@ -89,10 +83,10 @@ model RecipeComponents {
 
 model RecipeOutput {
   itemId   Int
-  item     Item   @relation(fields: [itemId], references: [id])
+  item     Item    @relation(fields: [itemId], references: [id])
   recipeId Int
-  recipe   Recipe @relation(fields: [recipeId], references: [id])
-  quantity Int    @default(1)
+  recipe   Recipe  @relation(fields: [recipeId], references: [id])
+  chance   Decimal @default(1)
 
   @@id([itemId, recipeId])
 }
