@@ -24,4 +24,19 @@ test.describe('tests re: recipes', () => {
 			(await page.getByText('Recipe for 1 a test item').all()).length
 		).toBeGreaterThan(existingRecipes);
 	});
+
+	test('can update a recipe', async ({ page }) => {
+		// const existingRecipes = (
+		// 	await page.getByText('Recipe for 2 second item').all()
+		// ).length;
+
+		await page.getByTestId('recipe-card-1').locator('a').click();
+		await page.waitForURL('**/recipes/1');
+		await expect(page.getByTestId(`component-select-0`)).toHaveValue('0');
+		await expect(page.getByTestId(`component-qty-0`)).toHaveValue('1');
+
+		// expect(
+		// 	(await page.getByText('Recipe for 2 second item').all()).length
+		// ).toBeGreaterThan(existingRecipes);
+	});
 });

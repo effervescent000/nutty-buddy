@@ -3,6 +3,9 @@ import { validateUser } from '../../utils/api-utils.js';
 
 export const load = async ({ cookies }) => {
 	const userId = validateUser(cookies);
+	const items = await db.item.findMany({ where: { userId } });
+	const methods = await db.method.findMany({ where: { userId } });
+	const requirements = await db.requirement.findMany({ where: { userId } });
 	const recipes = await db.recipe.findMany({
 		where: { userId },
 		include: {
@@ -19,5 +22,5 @@ export const load = async ({ cookies }) => {
 			recipeRequirements: { include: { requirement: true } }
 		}
 	});
-	return { recipes };
+	return { recipes, items, methods, requirements };
 };

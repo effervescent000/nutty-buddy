@@ -1,6 +1,6 @@
 <script lang="ts">
+	import RecipeMiniCard from '../../components/recipes/recipe-mini-card.svelte';
 	import type { IRecipeRead } from '../../typing/interfaces.js';
-	import { getRecipeName } from '../../utils/general-utils.js';
 
 	// PROPS
 	export let data: { recipes: IRecipeRead[] };
@@ -13,7 +13,9 @@
 <slot />
 
 {#if data.recipes.length}
-	{#each data.recipes as recipe}
-		<span>{getRecipeName(recipe)}</span>
-	{/each}
+	<div class="grid grid-cols-6">
+		{#each data.recipes as recipe}
+			<RecipeMiniCard {recipe} />
+		{/each}
+	</div>
 {/if}

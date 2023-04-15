@@ -1,11 +1,13 @@
 <script lang="ts">
 	import _ from 'lodash';
+
 	import type {
 		IItemRead,
 		IMethodRead,
 		IRecipeRead,
 		IRequirementRead
 	} from '../../typing/interfaces';
+
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import Button from '../common/button.svelte';
 	import ItemInputsWrapper from './item-inputs-wrapper.svelte';
@@ -39,6 +41,11 @@
 			rawOptions={data.items}
 			title="Recipe Components"
 			subheader="Input"
+			initialValues={recipe.components?.map((comp) => ({
+				id: comp.item.id,
+				name: comp.item.name,
+				qty: comp.quantity
+			}))}
 		/>
 		<div class="self-center">
 			<div>

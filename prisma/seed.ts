@@ -15,6 +15,17 @@ const main = async () => {
 			}
 		}
 	});
+	const another_item = await prisma.item.create({
+		data: {
+			name: 'second item',
+			type: 'item',
+			user: {
+				connect: {
+					id: user.id
+				}
+			}
+		}
+	});
 	const method = await prisma.method.create({
 		data: {
 			name: 'test method',
@@ -63,7 +74,7 @@ const main = async () => {
 			}
 		}
 	});
-	console.log({ user, item, method, req, recipe });
+	console.log({ user, item, another_item, method, req, recipe });
 };
 main()
 	.then(async () => {
