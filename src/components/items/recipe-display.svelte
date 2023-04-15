@@ -13,7 +13,7 @@
 	// LOGIC
 </script>
 
-<div class="border border-green flex rounded-sm">
+<div class="border border-green flex gap-4 rounded-sm">
 	<div>
 		{#each recipes as recipe}
 			<span

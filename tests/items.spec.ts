@@ -37,7 +37,7 @@ test.describe('tests re: inputting items', () => {
 		await expect(page.getByTestId('edit-item-name')).toHaveValue('a test item');
 		await page.getByTestId('edit-item-name').clear();
 		await page.getByTestId('edit-item-name').type('a more different item');
-		await page.getByTestId('new-item-save').click();
+		await page.getByTestId('edit-item-save').click();
 		await page.reload();
 		await expect(page.getByTestId('edit-item-name')).toHaveValue(
 			'a more different item'
