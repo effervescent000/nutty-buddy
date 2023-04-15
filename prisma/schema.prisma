@@ -14,11 +14,11 @@ model User {
   id   Int    @id @default(autoincrement())
   name String @unique
 
-  Item        Item[]
-  Mod         Mod[]
-  Method      Method[]
-  Recipe      Recipe[]
-  Requirement Requirement[]
+  item        Item[]
+  mod         Mod[]
+  method      Method[]
+  recipe      Recipe[]
+  requirement Requirement[]
 }
 
 model Item {
@@ -54,7 +54,7 @@ model Method {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  Recipe Recipe[]
+  recipe Recipe[]
 }
 
 model Recipe {
@@ -63,12 +63,12 @@ model Recipe {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  methodId Int
-  method   Method @relation(fields: [methodId], references: [id])
+  methodId Int?
+  method   Method? @relation(fields: [methodId], references: [id])
 
   components         RecipeComponents[]
-  produces           RecipeOutput[]
-  RecipeRequirements RecipeRequirements[]
+  output             RecipeOutput[]
+  recipeRequirements RecipeRequirements[]
 }
 
 model RecipeComponents {
@@ -83,10 +83,10 @@ model RecipeComponents {
 
 model RecipeOutput {
   itemId   Int
-  item     Item    @relation(fields: [itemId], references: [id])
+  item     Item   @relation(fields: [itemId], references: [id])
   recipeId Int
-  recipe   Recipe  @relation(fields: [recipeId], references: [id])
-  chance   Decimal @default(1)
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  chance   Float  @default(1)
 
   @@id([itemId, recipeId])
 }
@@ -99,7 +99,7 @@ model Requirement {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  RecipeRequirements RecipeRequirements[]
+  recipeRequirements RecipeRequirements[]
 }
 
 model RecipeRequirements {

@@ -1,68 +1,72 @@
 <script lang="ts">
 	import _ from 'lodash';
-	import type { IRecipeRead } from '../../typing/interfaces';
+	import type {
+		IItemRead,
+		IMethodRead,
+		IRecipeRead,
+		IRequirementRead
+	} from '../../typing/interfaces';
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import Button from '../common/button.svelte';
+	import ItemInputsWrapper from './item-inputs-wrapper.svelte';
 
 	// PROPS
 	export let recipe: IRecipeRead = {} as IRecipeRead;
+	export let data: {
+		items: IItemRead[];
+		methods: IMethodRead[];
+		requirements: IRequirementRead[];
+	};
 
 	// STATE
 
 	// LOGIC
-	const quantityOptions = _.range(9).map((i) => ({
-		value: (i + 1).toString(),
-		name: (i + 1).toString()
+	const methodOptions = data.methods.map(({ id, name }) => ({
+		value: id.toString(),
+		name
+	}));
+	const requirementOptions = data.requirements.map(({ id, name }) => ({
+		value: id.toString(),
+		name
 	}));
 </script>
 
-<form class="flex flex-col items-center">
+<form class="flex flex-col items-center" method="post">
 	<input type="hidden" name="id" value={recipe.id} />
 	<div class="flex gap-4">
-		<div>
-			<span>Recipe components</span>
-			{#each _.range(4) as i}
-				<div class="flex">
-					<UncontrolledSelect
-						name={`item-${i}`}
-						testid={`item-select-${i}`}
-						options={[]}
-					/>
-					<UncontrolledSelect
-						name={`quantity-${i}`}
-						testid={`qty-select-${i}`}
-						options={quantityOptions}
-					/>
-				</div>
-			{/each}
-		</div>
-		<div>
+		<ItemInputsWrapper
+			name="component"
+			rawOptions={data.items}
+			title="Recipe Components"
+			subheader="Input"
+		/>
+		<div class="self-center">
 			<div>
 				<span>Method</span>
-				<UncontrolledSelect options={[]} name="method" />
+				<UncontrolledSelect
+					options={methodOptions}
+					name="method"
+					testid="method"
+				/>
 			</div>
 			<div>
 				<span>Requires?</span>
-				<UncontrolledSelect options={[]} name="requirement" />
+				{#each _.range(3) as i}
+					<UncontrolledSelect
+						options={requirementOptions}
+						name={`requirement-${i}`}
+						testid={`requirement-${i}`}
+					/>
+				{/each}
 			</div>
 		</div>
-		<div>
-			<span>Recipe output</span>
-			{#each _.range(3) as i}
-				<div class="flex">
-					<UncontrolledSelect
-						name={`item-${i}`}
-						testid={`item-select-${i}`}
-						options={[]}
-					/>
-					<UncontrolledSelect
-						name={`quantity-${i}`}
-						testid={`qty-select-${i}`}
-						options={quantityOptions}
-					/>
-				</div>
-			{/each}
-		</div>
+		<ItemInputsWrapper
+			name="output"
+			rawOptions={data.items}
+			title="Recipe outputs"
+			subheader="Output"
+			numInputs={3}
+		/>
 	</div>
-	<Button classes="w-12">Save</Button>
+	<Button classes="w-12" testid="submit" type="submit">Save</Button>
 </form>
