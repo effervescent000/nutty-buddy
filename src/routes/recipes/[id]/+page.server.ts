@@ -19,5 +19,5 @@ export const load = async ({ cookies, params: { id } }) => {
 			recipeRequirements: { include: { requirement: true } }
 		}
 	});
-	return recipe;
+	return { recipe };
 };
