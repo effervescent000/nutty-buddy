@@ -59,5 +59,5 @@ export interface IMethod {
 export interface IMethodRead extends IMethod {
 	id: number;
 
-	recipes: IRecipeRead[];
+	recipes?: IRecipeRead[];
 }
