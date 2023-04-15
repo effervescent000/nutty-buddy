@@ -22,6 +22,7 @@ export interface IItem {
 export interface IItemRead extends IItem {
 	id: number;
 	mod?: IModRead;
+	producedBy: IRecipeOutput[];
 }
 
 export interface IRecipeRead {

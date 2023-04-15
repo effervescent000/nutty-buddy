@@ -1,17 +1,16 @@
 <script lang="ts">
-	import type { Mod } from '@prisma/client';
-
 	import { ITEM_TYPES } from '../../constants/item-constants';
+
+	import type { IItemRead, IModRead } from '../../typing/interfaces';
 
 	import UncontrolledTextInput from '../common/uncontrolled-text-input.svelte';
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import UncontrolledAutoComplete from '../common/uncontrolled-auto-complete.svelte';
 	import Button from '../common/button.svelte';
-	import type { IItemRead } from '../../typing/interfaces';
 
 	// PROPS
 	export let item: IItemRead | null;
-	export let mods: Mod[];
+	export let mods: IModRead[];
 
 	// STATE
 
