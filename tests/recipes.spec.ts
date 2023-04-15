@@ -26,10 +26,6 @@ test.describe('tests re: recipes', () => {
 	});
 
 	test('can update a recipe', async ({ page }) => {
-		// const existingRecipes = (
-		// 	await page.getByText('Recipe for 2 second item').all()
-		// ).length;
-
 		await page.getByTestId('recipe-card-1').locator('a').click();
 		await page.waitForURL('**/recipes/1');
 		await expect(page.getByTestId(`component-select-0`)).toHaveValue('1');
@@ -39,8 +35,11 @@ test.describe('tests re: recipes', () => {
 		await expect(page.getByTestId('output-select-0')).toHaveValue('1');
 		await expect(page.getByTestId('output-qty-0')).toHaveValue('1');
 
-		// expect(
-		// 	(await page.getByText('Recipe for 2 second item').all()).length
-		// ).toBeGreaterThan(existingRecipes);
+		await page.getByTestId(`component-select-0`).selectOption('second item');
+		await page.getByTestId(`output-select-0`).selectOption('second item');
+		await page.getByTestId('submit').click();
+		await page.reload();
+		await expect(page.getByTestId(`component-select-0`)).toHaveValue('2');
+		await expect(page.getByTestId(`output-select-0`)).toHaveValue('2');
 	});
 });
