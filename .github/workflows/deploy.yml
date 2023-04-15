@@ -99,8 +99,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Setup Prisma
-        run: npx prisma db push && npx prisma db seed
+      # - name: Setup Prisma
+      #   run: npx prisma db push && npx prisma db seed
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps

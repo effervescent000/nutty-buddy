@@ -15,6 +15,17 @@ const main = async () => {
 			}
 		}
 	});
+	const another_item = await prisma.item.create({
+		data: {
+			name: 'second item',
+			type: 'item',
+			user: {
+				connect: {
+					id: user.id
+				}
+			}
+		}
+	});
 	const method = await prisma.method.create({
 		data: {
 			name: 'test method',
@@ -28,7 +39,42 @@ const main = async () => {
 			user: { connect: { id: user.id } }
 		}
 	});
-	console.log({ user, item, method, req });
+	const recipe = await prisma.recipe.create({
+		data: {
+			user: { connect: { id: user.id } },
+			method: {
+				connect: {
+					id: method.id
+				}
+			},
+			recipeRequirements: {
+				create: [
+					{
+						requirement: { connect: { id: req.id } }
+					}
+				]
+			},
+			components: {
+				create: [
+					{
+						quantity: 1,
+						item: {
+							connect: { id: item.id }
+						}
+					}
+				]
+			},
+			output: {
+				create: [
+					{
+						chance: 1,
+						item: { connect: { id: item.id } }
+					}
+				]
+			}
+		}
+	});
+	console.log({ user, item, another_item, method, req, recipe });
 };
 main()
 	.then(async () => {

@@ -29,6 +29,12 @@ export interface IRecipeRead {
 	components: IRecipeComponent[];
 	output: IRecipeOutput[];
 	method: IMethodRead;
+	recipeRequirements: IRecipeRequirement[];
+}
+
+interface IRecipeRequirement {
+	recipe: IRecipeRead;
+	requirement: IRequirementRead;
 }
 
 interface IRecipeComponent {

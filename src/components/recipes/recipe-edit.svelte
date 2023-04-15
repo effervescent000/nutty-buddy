@@ -1,11 +1,13 @@
 <script lang="ts">
 	import _ from 'lodash';
+
 	import type {
 		IItemRead,
 		IMethodRead,
 		IRecipeRead,
 		IRequirementRead
 	} from '../../typing/interfaces';
+
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import Button from '../common/button.svelte';
 	import ItemInputsWrapper from './item-inputs-wrapper.svelte';
@@ -39,6 +41,11 @@
 			rawOptions={data.items}
 			title="Recipe Components"
 			subheader="Input"
+			initialValues={recipe.components?.map((comp) => ({
+				id: comp.item.id,
+				name: comp.item.name,
+				qty: comp.quantity
+			}))}
 		/>
 		<div class="self-center">
 			<div>
@@ -47,6 +54,7 @@
 					options={methodOptions}
 					name="method"
 					testid="method"
+					initialValue={recipe.method?.id.toString()}
 				/>
 			</div>
 			<div>
@@ -56,6 +64,9 @@
 						options={requirementOptions}
 						name={`requirement-${i}`}
 						testid={`requirement-${i}`}
+						initialValue={recipe.recipeRequirements?.[i]
+							? recipe.recipeRequirements[i].requirement.id.toString()
+							: undefined}
 					/>
 				{/each}
 			</div>
@@ -66,6 +77,11 @@
 			title="Recipe outputs"
 			subheader="Output"
 			numInputs={3}
+			initialValues={recipe.output?.map((comp) => ({
+				id: comp.item.id,
+				name: comp.item.name,
+				qty: comp.chance
+			}))}
 		/>
 	</div>
 	<Button classes="w-12" testid="submit" type="submit">Save</Button>

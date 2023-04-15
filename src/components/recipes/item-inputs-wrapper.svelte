@@ -1,5 +1,6 @@
 <script lang="ts">
 	import _ from 'lodash';
+
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import UncontrolledTextInput from '../common/uncontrolled-text-input.svelte';
 
@@ -9,6 +10,8 @@
 	export let rawOptions: { id: number; name: string }[];
 	export let name: string;
 	export let subheader: string;
+
+	export let initialValues: { id: number; name: string; qty: number }[] = [];
 
 	// STATE
 
@@ -29,10 +32,16 @@
 				name={`${name}-${i}`}
 				testid={`${name}-select-${i}`}
 				options={cleanedOptions}
+				initialValue={initialValues[i]
+					? initialValues[i].id.toString()
+					: undefined}
 			/>
 			<UncontrolledTextInput
 				name={`${name}-qty-${i}`}
 				testid={`${name}-qty-${i}`}
+				initialValue={initialValues[i]
+					? initialValues[i].qty.toString()
+					: undefined}
 			/>
 		{/each}
 	</div>
