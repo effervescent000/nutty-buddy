@@ -111,7 +111,7 @@ export const actions = {
 			});
 			return recipe;
 		} catch (e) {
-			throw error(400, `error creating item, ${e}`);
+			throw error(400, `error creating recipe, ${e}`);
 		}
 	}
 };

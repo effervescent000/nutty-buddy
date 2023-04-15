@@ -54,6 +54,7 @@
 					options={methodOptions}
 					name="method"
 					testid="method"
+					initialValue={recipe.method?.id.toString()}
 				/>
 			</div>
 			<div>
@@ -63,6 +64,9 @@
 						options={requirementOptions}
 						name={`requirement-${i}`}
 						testid={`requirement-${i}`}
+						initialValue={recipe.recipeRequirements?.[i]
+							? recipe.recipeRequirements[i].requirement.id.toString()
+							: undefined}
 					/>
 				{/each}
 			</div>
@@ -73,6 +77,11 @@
 			title="Recipe outputs"
 			subheader="Output"
 			numInputs={3}
+			initialValues={recipe.output?.map((comp) => ({
+				id: comp.item.id,
+				name: comp.item.name,
+				qty: comp.chance
+			}))}
 		/>
 	</div>
 	<Button classes="w-12" testid="submit" type="submit">Save</Button>

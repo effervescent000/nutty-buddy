@@ -32,8 +32,12 @@ test.describe('tests re: recipes', () => {
 
 		await page.getByTestId('recipe-card-1').locator('a').click();
 		await page.waitForURL('**/recipes/1');
-		await expect(page.getByTestId(`component-select-0`)).toHaveValue('0');
+		await expect(page.getByTestId(`component-select-0`)).toHaveValue('1');
 		await expect(page.getByTestId(`component-qty-0`)).toHaveValue('1');
+		await expect(page.getByTestId('method')).toHaveValue('1');
+		await expect(page.getByTestId('requirement-0')).toHaveValue('1');
+		await expect(page.getByTestId('output-select-0')).toHaveValue('1');
+		await expect(page.getByTestId('output-qty-0')).toHaveValue('1');
 
 		// expect(
 		// 	(await page.getByText('Recipe for 2 second item').all()).length

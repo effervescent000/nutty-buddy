@@ -16,7 +16,8 @@ export const load = async ({ cookies, params: { id } }) => {
 					item: true
 				}
 			},
-			recipeRequirements: { include: { requirement: true } }
+			recipeRequirements: { include: { requirement: true } },
+			method: true
 		}
 	});
 	return { recipe };
