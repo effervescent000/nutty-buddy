@@ -39,11 +39,13 @@
 			</div>
 			<div>
 				<span>Requires?</span>
-				<UncontrolledSelect
-					options={[]}
-					name="requirement"
-					testid="requirement"
-				/>
+				{#each _.range(3) as i}
+					<UncontrolledSelect
+						options={[]}
+						name={`requirement-${i}`}
+						testid={`requirement-${i}`}
+					/>
+				{/each}
 			</div>
 		</div>
 		<ItemInputsWrapper
@@ -54,5 +56,5 @@
 			numInputs={3}
 		/>
 	</div>
-	<Button classes="w-12">Save</Button>
+	<Button classes="w-12" testid="submit" type="submit">Save</Button>
 </form>
