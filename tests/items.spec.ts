@@ -31,7 +31,7 @@ test.describe('tests re: inputting items', () => {
 		await expect(page.getByText('2 a test item')).toBeVisible();
 	});
 
-	test.skip('can focus and edit an item', async ({ page }) => {
+	test('can focus and edit an item', async ({ page }) => {
 		await page.getByTestId(`mini-card-${'a test item'}`).locator('a').click();
 		await page.waitForURL(/items\/\d+$/);
 		await expect(page.getByTestId('item-name')).toHaveValue('a test item');
