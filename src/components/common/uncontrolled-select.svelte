@@ -18,7 +18,7 @@
 		{name}
 		data-testid={testid}
 		bind:value
-		class="bg-off-white rounded-sm border border-green"
+		class="bg-off-white rounded-sm border border-green p-x-2 py-1"
 	>
 		{#each [{ name: '---', value: '' }, ...options] as option}
 			<option value={option.value}>{option.name}</option>

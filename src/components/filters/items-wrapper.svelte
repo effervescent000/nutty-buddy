@@ -12,7 +12,7 @@
 	// LOGIC
 </script>
 
-<div class="grid grid-cols-8 gap-x-6">
+<div class="grid grid-cols-8 gap-x-6 mt-4">
 	{#if items}
 		{#each items as item}
 			<ItemMiniCard {item} />

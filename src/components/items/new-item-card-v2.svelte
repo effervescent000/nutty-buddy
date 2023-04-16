@@ -21,7 +21,7 @@
 	}));
 </script>
 
-<form method="post">
+<form method="post" class="flex flex-col gap-1 w-[20rem]">
 	<UncontrolledTextInput name="item-name" label="Name" testid="new-item-name" />
 	<UncontrolledSelect
 		name="item-type"

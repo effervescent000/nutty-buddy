@@ -11,15 +11,17 @@
 	let value = initialValue || '';
 </script>
 
-{#if label}
-	<span>{label}</span>
-{/if}
-<input
-	bind:value
-	{id}
-	{name}
-	data-testid={testid}
-	autocomplete="off"
-	class="bg-off-white rounded-sm border border-green"
-	{required}
-/>
+<div class="flex gap-2">
+	{#if label}
+		<span>{label}</span>
+	{/if}
+	<input
+		bind:value
+		{id}
+		{name}
+		data-testid={testid}
+		autocomplete="off"
+		class="bg-off-white rounded-sm border border-green w-[15rem]"
+		{required}
+	/>
+</div>
