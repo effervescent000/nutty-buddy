@@ -17,7 +17,7 @@ test.describe('tests re: recipes', () => {
 		await page.getByTestId('submit').click();
 		await page.waitForTimeout(100);
 
-		await expect(page.getByText('Recipe for 2 some item')).toBeVisible();
+		await expect(page.getByText('Recipe for 2 second item')).toBeVisible();
 	});
 
 	test('can update a recipe', async ({ page }) => {
