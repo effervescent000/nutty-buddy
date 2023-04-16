@@ -14,7 +14,7 @@
 	];
 </script>
 
-<nav class="flex gap-4 text-xl">
+<nav class="flex gap-4 text-xl mb-2">
 	{#each LINKS as link}
 		<NavLink {...link} />
 	{/each}

@@ -33,7 +33,7 @@
 	};
 </script>
 
-<div class="flex">
+<div class="flex gap-2">
 	{#if label}
 		<span>{label}</span>
 	{/if}
@@ -41,7 +41,7 @@
 		<input
 			name={nameName}
 			value={nameValue}
-			class="bg-off-white rounded-sm border border-green"
+			class="bg-off-white rounded-sm border border-green w-[15rem]"
 			data-testid={testid}
 			on:input={handleChange}
 			on:blur={() => setTimeout(() => (showOptions = false), 250)}

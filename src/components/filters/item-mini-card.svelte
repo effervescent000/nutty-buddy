@@ -11,7 +11,7 @@
 	// LOGIC
 </script>
 
-<div data-testid={`mini-card-${item.name}`} class="flex">
+<div data-testid={`mini-card-${item.name}`} class="flex justify-between">
 	<span>{item.name}</span>
 	<div>
 		<a href={`/items/${item.id}`}>

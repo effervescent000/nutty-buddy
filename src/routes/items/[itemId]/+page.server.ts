@@ -44,4 +44,5 @@ export const load = async ({ params, cookies }) => {
 		);
 		return { item, recipeValues: mergedResult };
 	}
+	return { item };
 };
