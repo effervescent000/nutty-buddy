@@ -28,25 +28,23 @@
 	<UncontrolledTextInput
 		name="item-name"
 		label="Name"
-		testid="new-item-name"
+		testid="item-name"
 		initialValue={item.name}
 	/>
 	<UncontrolledSelect
 		name="item-type"
 		label="Item type"
 		options={itemTypeOptions}
-		testid="new-item-type"
+		testid="item-type"
 		initialValue={item.type}
 	/>
 	<UncontrolledAutoComplete
 		label="Mod"
 		nameName="mod-name"
-		testid="new-item-mod"
+		testid="item-mod"
 		idName="mod-id"
 		options={mods}
 		initialValue={item.mod}
 	/>
-	<Button testid="new-item-save" type="submit" classes="w-min ml-10">
-		Save
-	</Button>
+	<Button testid="item-save" type="submit" classes="w-min ml-10">Save</Button>
 </form>
