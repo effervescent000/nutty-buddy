@@ -8,7 +8,7 @@ test.describe('tests re: recipes', () => {
 	});
 
 	test('can persist a recipe', async ({ page }) => {
-		await page.getByTestId(`component-select-0`).selectOption('a test item');
+		await page.getByTestId(`component-select-0`).selectOption('1');
 		await page.getByTestId(`component-qty-0`).type('1');
 		await page.getByTestId('method').selectOption('test method');
 		await page.getByTestId('requirement-0').selectOption('test req');
