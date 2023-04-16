@@ -5,6 +5,12 @@
 
 	// PROPS
 	export let recipes: IRecipeRead[];
+	export let recipeValues: {
+		[id: number]: {
+			name: string;
+			qty: number;
+		};
+	};
 
 	// STATE
 	let focusedRecipe: IRecipeRead | undefined = undefined;
@@ -32,8 +38,8 @@
 					testid="qty-input"
 				/>
 
-				{#each focusedRecipe.components as comp}
-					<span>{`${comp.quantity * selectedQuantity} ${comp.item.name}`}</span>
+				{#each Object.values(recipeValues) as rv}
+					<span>{`${rv.qty * selectedQuantity} ${rv.name}`}</span>
 				{/each}
 			</div>
 		{/if}

@@ -38,14 +38,18 @@ interface IRecipeRequirement {
 	requirement: IRequirementRead;
 }
 
-interface IRecipeComponent {
+export interface IRecipeComponent {
+	recipeId: number;
+	itemId: number;
 	recipe: IRecipeRead;
 	item: IItemRead;
 	quantity: number;
 }
 
 interface IRecipeOutput {
+	recipeId: number;
 	recipe: IRecipeRead;
+	itemId: number;
 	item: IItemRead;
 	chance: number;
 }
