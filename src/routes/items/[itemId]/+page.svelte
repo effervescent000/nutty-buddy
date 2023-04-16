@@ -27,5 +27,6 @@
 	<RecipeDisplay
 		recipes={data.item.producedBy.map(({ recipe }) => recipe)}
 		recipeValues={data.recipeValues}
+		targetItem={data.item}
 	/>
 </div>
