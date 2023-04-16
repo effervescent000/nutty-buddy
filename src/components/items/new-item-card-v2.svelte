@@ -36,5 +36,7 @@
 		idName="mod-id"
 		options={mods}
 	/>
-	<Button testid="new-item-save" type="submit">Save</Button>
+	<Button testid="new-item-save" type="submit" classes="w-min ml-10"
+		>Save</Button
+	>
 </form>
