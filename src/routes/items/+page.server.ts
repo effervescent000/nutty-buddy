@@ -1,4 +1,5 @@
 import { db } from '../../db.server.js';
+import { validateUser } from '../../utils/api-utils.js';
 import {
 	coerceFormDataEntryToNumber,
 	wrapData
@@ -6,8 +7,8 @@ import {
 
 export const actions = {
 	default: async ({ request, cookies }) => {
+		const userId = validateUser(cookies);
 		const data = await request.formData();
-		const userId = cookies.get('userId');
 		const itemName = data.get('item-name')?.toString();
 		const itemType = data.get('item-type')?.toString();
 		const mod = {
@@ -15,34 +16,32 @@ export const actions = {
 			id: coerceFormDataEntryToNumber(data.get('mod-id'))
 		};
 
-		if (userId) {
-			if (itemName && itemType) {
-				const item = await db.item.create({
-					data: {
-						name: itemName,
-						type: itemType,
-						user: {
-							connect: { id: +userId }
-						},
-						mod: mod.name
-							? {
-									connectOrCreate: {
-										where: {
-											id: mod.id
-										},
-										create: {
-											name: mod.name,
-											user: {
-												connect: { id: +userId }
-											}
+		if (itemName && itemType) {
+			const item = await db.item.create({
+				data: {
+					name: itemName,
+					type: itemType,
+					user: {
+						connect: { id: userId }
+					},
+					mod: mod.name
+						? {
+								connectOrCreate: {
+									where: {
+										id: mod.id
+									},
+									create: {
+										name: mod.name,
+										user: {
+											connect: { id: userId }
 										}
 									}
-							  }
-							: undefined
-					}
-				});
-				return wrapData(item);
-			}
+								}
+						  }
+						: undefined
+				}
+			});
+			return wrapData(item);
 		}
 	}
 };

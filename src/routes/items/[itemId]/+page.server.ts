@@ -46,3 +46,35 @@ export const load = async ({ params, cookies }) => {
 	}
 	return { item };
 };
+
+export const actions = {
+	// this is the UPDATE FUNCTION DUMMY
+	default: async ({ cookies, request, params }) => {
+		const userId = validateUser(cookies);
+		const itemId = +params.itemId;
+		const formData = Object.fromEntries((await request.formData()).entries());
+		const item = await db.item.update({
+			where: { id: itemId },
+			data: {
+				name: formData['item-name']?.toString(),
+				type: formData['item-type']?.toString(),
+				mod: formData['mod-name']
+					? {
+							connectOrCreate: {
+								where: {
+									id: +formData['mod-id']?.toString()
+								},
+								create: {
+									name: formData['mod-name'].toString(),
+									user: {
+										connect: { id: userId }
+									}
+								}
+							}
+					  }
+					: undefined
+			}
+		});
+		return { item };
+	}
+};

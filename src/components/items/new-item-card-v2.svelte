@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { ITEM_TYPES } from '../../constants/item-constants';
 
+	import type { IItemRead, IModRead } from '../../typing/interfaces';
+
 	import Button from '../common/button.svelte';
 	import UncontrolledAutoComplete from '../common/uncontrolled-auto-complete.svelte';
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import UncontrolledTextInput from '../common/uncontrolled-text-input.svelte';
-	import type { Mod } from '@prisma/client';
 
 	// PROPS
 
-	export let mods: Mod[];
+	export let mods: IModRead[];
+	export let item: Partial<IItemRead> = {};
 
 	// STATE
 
@@ -22,21 +24,27 @@
 </script>
 
 <form method="post" class="flex flex-col gap-1 w-[20rem]">
-	<UncontrolledTextInput name="item-name" label="Name" testid="new-item-name" />
+	<input type="hidden" name="item-id" value={item.id} />
+	<UncontrolledTextInput
+		name="item-name"
+		label="Name"
+		testid="item-name"
+		initialValue={item.name}
+	/>
 	<UncontrolledSelect
 		name="item-type"
 		label="Item type"
 		options={itemTypeOptions}
-		testid="new-item-type"
+		testid="item-type"
+		initialValue={item.type}
 	/>
 	<UncontrolledAutoComplete
 		label="Mod"
 		nameName="mod-name"
-		testid="new-item-mod"
+		testid="item-mod"
 		idName="mod-id"
 		options={mods}
+		initialValue={item.mod}
 	/>
-	<Button testid="new-item-save" type="submit" classes="w-min ml-10"
-		>Save</Button
-	>
+	<Button testid="item-save" type="submit" classes="w-min ml-10">Save</Button>
 </form>
