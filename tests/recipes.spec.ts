@@ -8,10 +8,6 @@ test.describe('tests re: recipes', () => {
 	});
 
 	test('can persist a recipe', async ({ page }) => {
-		const existingRecipes = (
-			await page.getByText('Recipe for 2 some item').all()
-		).length;
-
 		await page.getByTestId(`component-select-0`).selectOption('a test item');
 		await page.getByTestId(`component-qty-0`).type('1');
 		await page.getByTestId('method').selectOption('test method');
@@ -21,9 +17,7 @@ test.describe('tests re: recipes', () => {
 		await page.getByTestId('submit').click();
 		await page.waitForTimeout(100);
 
-		expect(
-			(await page.getByText('Recipe for 2 some item').all()).length
-		).toBeGreaterThan(existingRecipes);
+		await expect(page.getByText('Recipe for 2 some item')).toBeVisible();
 	});
 
 	test('can update a recipe', async ({ page }) => {
