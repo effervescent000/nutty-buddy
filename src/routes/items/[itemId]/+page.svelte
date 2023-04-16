@@ -6,9 +6,7 @@
 	// PROPS
 	export let data: {
 		item: IItemRead;
-		data: {
-			mods: IModRead[];
-		};
+		mods: IModRead[];
 		recipeValues: {
 			[id: number]: {
 				name: string;
@@ -23,7 +21,7 @@
 </script>
 
 <div class="grid grid-cols-2">
-	<ItemEdit item={data.item} mods={data.data.mods} />
+	<ItemEdit item={data.item} mods={data.mods} />
 	<RecipeDisplay
 		recipes={data.item.producedBy.map(({ recipe }) => recipe)}
 		recipeValues={data.recipeValues}

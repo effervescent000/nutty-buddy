@@ -1,13 +1,15 @@
 import { db } from '../../db.server';
-import { getNumericUserIdFromCookies } from '../../utils/api-utils';
-import { wrapData } from '../../utils/general-utils';
+import { validateUser } from '../../utils/api-utils';
 
 export const load = async ({ cookies }) => {
-	const userId = getNumericUserIdFromCookies(cookies);
-	if (userId) {
-		const items = await db.item.findMany({ where: { userId } });
-		const mods = await db.mod.findMany({ where: { userId } });
-		return wrapData({ items, mods });
-	}
-	return wrapData({ items: [], mods: [] });
+	const userId = validateUser(cookies);
+	const items = await db.item.findMany({
+		where: { userId },
+		orderBy: { name: 'asc' }
+	});
+	const mods = await db.mod.findMany({
+		where: { userId },
+		orderBy: { name: 'asc' }
+	});
+	return { items, mods };
 };

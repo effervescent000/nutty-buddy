@@ -12,8 +12,10 @@
 	// LOGIC
 </script>
 
-{#if items}
-	{#each items as item}
-		<ItemMiniCard {item} />
-	{/each}
-{/if}
+<div class="grid grid-cols-8 gap-x-6">
+	{#if items}
+		{#each items as item}
+			<ItemMiniCard {item} />
+		{/each}
+	{/if}
+</div>
