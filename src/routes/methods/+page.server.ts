@@ -3,7 +3,10 @@ import { validateUser } from '../../utils/api-utils.js';
 
 export const load = async ({ cookies }) => {
 	const userId = validateUser(cookies);
-	const methods = await db.method.findMany({ where: { userId } });
+	const methods = await db.method.findMany({
+		where: { userId },
+		orderBy: { name: 'asc' }
+	});
 	return { methods };
 };
 

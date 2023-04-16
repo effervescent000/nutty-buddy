@@ -5,7 +5,10 @@ import { coerceFormDataEntryToNumber } from '../../utils/general-utils.js';
 export const load = async ({ cookies }) => {
 	const userId = validateUser(cookies);
 
-	const requirements = await db.requirement.findMany({ where: { userId } });
+	const requirements = await db.requirement.findMany({
+		where: { userId },
+		orderBy: { name: 'asc' }
+	});
 	return { requirements };
 };
 
