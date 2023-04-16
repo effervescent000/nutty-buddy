@@ -1,6 +1,6 @@
 <script lang="ts">
 	// PROPS
-	export let initialValue = '';
+	export let initialValue: { name: string; id: number } | undefined = undefined;
 	export let options: { id: number; name: string }[];
 	export let label: string;
 	export let testid = '';
@@ -9,8 +9,8 @@
 
 	// STATE
 	let showOptions = false;
-	let idValue: number;
-	let nameValue = initialValue;
+	let idValue: number | undefined = initialValue?.id;
+	let nameValue = initialValue?.name || '';
 
 	$: filteredOptions = options.filter((opt) =>
 		opt.name.toLowerCase().includes(nameValue.toLowerCase())
