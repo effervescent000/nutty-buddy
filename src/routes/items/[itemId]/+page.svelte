@@ -23,7 +23,7 @@
 <div class="grid grid-cols-2">
 	<ItemEdit item={data.item} mods={data.mods} />
 	<RecipeDisplay
-		recipes={data.item.producedBy.map(({ recipe }) => recipe)}
+		recipes={data.item?.producedBy?.map(({ recipe }) => recipe) || []}
 		recipeValues={data.recipeValues}
 		targetItem={data.item}
 	/>
