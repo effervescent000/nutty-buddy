@@ -31,7 +31,9 @@ export const load = async ({ params, cookies }) => {
 	});
 
 	if (item && item.producedBy.length) {
-		const result = await getComponents(item.producedBy[0].recipe.components);
+		const result = await getComponents(
+			item.producedBy[0].recipe.components.map((comp) => ({ components: comp }))
+		);
 		const mergedResult = result.reduce(
 			(acc, cur) => ({
 				...acc,
