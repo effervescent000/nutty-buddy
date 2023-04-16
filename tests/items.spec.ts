@@ -37,10 +37,17 @@ test.describe('tests re: inputting items', () => {
 		await expect(page.getByTestId('item-name')).toHaveValue('a test item');
 		await page.getByTestId('item-name').clear();
 		await page.getByTestId('item-name').type('a more different item');
+		await page.getByTestId('item-type').selectOption('liquid');
+		await page.getByTestId('item-mod').clear();
+		await page.getByTestId('item-mod').type('TESTING NEW MOD');
 		await page.getByTestId('item-save').click();
+
 		await page.reload();
+
 		await expect(page.getByTestId('item-name')).toHaveValue(
 			'a more different item'
 		);
+		await expect(page.getByTestId('item-type')).toHaveValue('liquid');
+		await expect(page.getByTestId('item-mod')).toHaveValue('TESTING NEW MOD');
 	});
 });
