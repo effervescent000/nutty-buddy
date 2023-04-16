@@ -1,8 +1,6 @@
 <script lang="ts">
-	import type { Item } from '@prisma/client';
-
 	import Icon from '../common/icon.svelte';
-	import type { IItem, IItemRead } from '../../typing/interfaces';
+	import type { IItemRead } from '../../typing/interfaces';
 
 	// PROPS
 	export let item: IItemRead;

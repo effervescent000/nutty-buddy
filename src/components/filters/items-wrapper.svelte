@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { Item } from '@prisma/client';
-
 	import ItemMiniCard from './item-mini-card.svelte';
 	import type { IItemRead } from '../../typing/interfaces';
 	import ControlledTextInput from '../common/controlled-text-input.svelte';
@@ -11,7 +9,7 @@
 
 	// STATE
 	let filteredItems: IItemRead[] = items;
-	let outputFilter: string = '';
+	let outputFilter = '';
 
 	$: filteredItems = items.filter((item) => item.name.includes(outputFilter));
 
