@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { userIdStore } from '../stores';
+	import { invalidateAll } from '$app/navigation';
 
 	import { URLS } from '../constants/url-constants';
 	import { POST } from '../utils/api-utils';
 
 	import Button from '../components/common/button.svelte';
 	import UncontrolledTextInput from '../components/common/uncontrolled-text-input.svelte';
-	import { invalidateAll } from '$app/navigation';
 
 	// LOGIC
 	const handleSubmit = async (event: SubmitEvent) => {

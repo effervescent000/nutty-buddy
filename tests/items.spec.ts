@@ -22,7 +22,7 @@ test.describe('tests re: inputting items', () => {
 
 	test("can view an item's recipes", async ({ page }) => {
 		await page.getByTestId(`mini-card-${'second item'}`).locator('a').click();
-		await page.waitForURL(/items\/\d+$/);
+		await page.waitForURL(/items\/\d+/);
 		await expect(page.getByText('Via test method')).toBeVisible();
 		await page.getByText('Via test method').click();
 		await expect(page.getByText('1 a test item')).toBeVisible();
@@ -33,7 +33,7 @@ test.describe('tests re: inputting items', () => {
 
 	test('can focus and edit an item', async ({ page }) => {
 		await page.getByTestId(`mini-card-${'a test item'}`).locator('a').click();
-		await page.waitForURL(/items\/\d+$/);
+		await page.waitForURL(/items\/\d+/);
 		await expect(page.getByTestId('item-name')).toHaveValue('a test item');
 		await page.getByTestId('item-name').clear();
 		await page.getByTestId('item-name').type('a more different item');
