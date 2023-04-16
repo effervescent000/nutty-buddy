@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ItemEdit from '../../../components/items/item-edit.svelte';
 	import NewItemCardV2 from '../../../components/items/new-item-card-v2.svelte';
 	import RecipeDisplay from '../../../components/items/recipe-display.svelte';
 	import type { IItemRead, IModRead } from '../../../typing/interfaces';
