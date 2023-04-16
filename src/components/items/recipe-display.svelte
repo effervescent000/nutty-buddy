@@ -21,6 +21,7 @@
 </script>
 
 <div class="border border-green flex gap-4 rounded-sm">
+	<span>{targetItem?.name}</span>
 	<div>
 		{#each recipes as recipe}
 			<span
