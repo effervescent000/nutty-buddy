@@ -9,6 +9,8 @@
 
 	// STATE
 	let value = initialValue || '';
+
+	$: value = initialValue || '';
 </script>
 
 <div class="flex gap-2">

@@ -8,6 +8,8 @@
 
 	// STATE
 	let value = initialValue;
+
+	$: value = initialValue || '';
 </script>
 
 <div>
