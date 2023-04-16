@@ -21,7 +21,7 @@ test.describe('tests re: inputting items', () => {
 	});
 
 	test("can view an item's recipes", async ({ page }) => {
-		await page.getByTestId(`mini-card-${'a test item'}`).locator('a').click();
+		await page.getByTestId(`mini-card-${'second item'}`).locator('a').click();
 		await page.waitForURL(/items\/\d+$/);
 		await expect(page.getByText('Via test method')).toBeVisible();
 		await page.getByText('Via test method').click();

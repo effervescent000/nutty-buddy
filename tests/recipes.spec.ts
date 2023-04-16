@@ -8,21 +8,16 @@ test.describe('tests re: recipes', () => {
 	});
 
 	test('can persist a recipe', async ({ page }) => {
-		const existingRecipes = (
-			await page.getByText('Recipe for 1 a test item').all()
-		).length;
-
 		await page.getByTestId(`component-select-0`).selectOption('a test item');
 		await page.getByTestId(`component-qty-0`).type('1');
 		await page.getByTestId('method').selectOption('test method');
 		await page.getByTestId('requirement-0').selectOption('test req');
-		await page.getByTestId(`output-select-0`).selectOption('a test item');
-		await page.getByTestId(`output-qty-0`).type('1');
+		await page.getByTestId(`output-select-0`).selectOption('second item');
+		await page.getByTestId(`output-qty-0`).type('2');
 		await page.getByTestId('submit').click();
+		await page.waitForTimeout(100);
 
-		expect(
-			(await page.getByText('Recipe for 1 a test item').all()).length
-		).toBeGreaterThan(existingRecipes);
+		await expect(page.getByText('Recipe for 2 second item')).toBeVisible();
 	});
 
 	test('can update a recipe', async ({ page }) => {
@@ -32,14 +27,14 @@ test.describe('tests re: recipes', () => {
 		await expect(page.getByTestId(`component-qty-0`)).toHaveValue('1');
 		await expect(page.getByTestId('method')).toHaveValue('1');
 		await expect(page.getByTestId('requirement-0')).toHaveValue('1');
-		await expect(page.getByTestId('output-select-0')).toHaveValue('1');
+		await expect(page.getByTestId('output-select-0')).toHaveValue('2');
 		await expect(page.getByTestId('output-qty-0')).toHaveValue('1');
 
 		await page.getByTestId(`component-select-0`).selectOption('second item');
-		await page.getByTestId(`output-select-0`).selectOption('second item');
+		await page.getByTestId(`output-select-0`).selectOption('a test item');
 		await page.getByTestId('submit').click();
 		await page.reload();
 		await expect(page.getByTestId(`component-select-0`)).toHaveValue('2');
-		await expect(page.getByTestId(`output-select-0`)).toHaveValue('2');
+		await expect(page.getByTestId(`output-select-0`)).toHaveValue('1');
 	});
 });

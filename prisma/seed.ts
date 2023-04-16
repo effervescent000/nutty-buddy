@@ -68,7 +68,7 @@ const main = async () => {
 				create: [
 					{
 						chance: 1,
-						item: { connect: { id: item.id } }
+						item: { connect: { id: another_item.id } }
 					}
 				]
 			}

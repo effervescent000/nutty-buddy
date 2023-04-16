@@ -9,6 +9,12 @@
 		data: {
 			mods: IModRead[];
 		};
+		recipeValues: {
+			[id: number]: {
+				name: string;
+				qty: number;
+			};
+		};
 	};
 
 	// STATE
@@ -18,5 +24,9 @@
 
 <div class="grid grid-cols-2">
 	<ItemEdit item={data.item} mods={data.data.mods} />
-	<RecipeDisplay recipes={data.item.producedBy.map(({ recipe }) => recipe)} />
+	<RecipeDisplay
+		recipes={data.item.producedBy.map(({ recipe }) => recipe)}
+		recipeValues={data.recipeValues}
+		targetItem={data.item}
+	/>
 </div>

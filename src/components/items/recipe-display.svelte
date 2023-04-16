@@ -1,10 +1,17 @@
 <script lang="ts">
-	import type { IRecipeRead } from '../../typing/interfaces';
+	import type { IItemRead, IRecipeRead } from '../../typing/interfaces';
 
 	import ControlledTextInput from '../common/controlled-text-input.svelte';
 
 	// PROPS
 	export let recipes: IRecipeRead[];
+	export let recipeValues: {
+		[id: number]: {
+			name: string;
+			qty: number;
+		};
+	};
+	export let targetItem: IItemRead;
 
 	// STATE
 	let focusedRecipe: IRecipeRead | undefined = undefined;
@@ -32,8 +39,15 @@
 					testid="qty-input"
 				/>
 
-				{#each focusedRecipe.components as comp}
-					<span>{`${comp.quantity * selectedQuantity} ${comp.item.name}`}</span>
+				{#each Object.values(recipeValues) as rv}
+					<span
+						>{`${+(
+							(rv.qty * selectedQuantity) /
+							(targetItem.producedBy.find(
+								({ recipeId }) => recipeId === focusedRecipe?.id
+							)?.chance || 1)
+						).toPrecision(3)} ${rv.name}`}</span
+					>
 				{/each}
 			</div>
 		{/if}
