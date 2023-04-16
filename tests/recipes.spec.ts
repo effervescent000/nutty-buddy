@@ -19,6 +19,7 @@ test.describe('tests re: recipes', () => {
 		await page.getByTestId(`output-select-0`).selectOption('second item');
 		await page.getByTestId(`output-qty-0`).type('2');
 		await page.getByTestId('submit').click();
+		await page.waitForTimeout(100);
 
 		expect(
 			(await page.getByText('Recipe for 2 some item').all()).length
