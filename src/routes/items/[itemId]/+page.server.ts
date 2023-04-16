@@ -1,6 +1,6 @@
 import { db } from '../../../db.server.js';
 import { validateUser } from '../../../utils/api-utils.js';
-import { getComponents } from '../../../utils/db-utils.js';
+import { getComponents } from '../../../utils/recipe-utils.js';
 
 export const load = async ({ params, cookies }) => {
 	const userId = validateUser(cookies);
