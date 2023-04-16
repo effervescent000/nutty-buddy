@@ -16,7 +16,7 @@ test.describe('tests re: recipes', () => {
 		await page.getByTestId(`component-qty-0`).type('1');
 		await page.getByTestId('method').selectOption('test method');
 		await page.getByTestId('requirement-0').selectOption('test req');
-		await page.getByTestId(`output-select-0`).selectOption('a test item');
+		await page.getByTestId(`output-select-0`).selectOption('second item');
 		await page.getByTestId(`output-qty-0`).type('2');
 		await page.getByTestId('submit').click();
 
