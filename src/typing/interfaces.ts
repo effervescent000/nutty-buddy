@@ -33,7 +33,7 @@ export interface IRecipeRead {
 	recipeRequirements: IRecipeRequirement[];
 }
 
-interface IRecipeRequirement {
+export interface IRecipeRequirement {
 	recipe: IRecipeRead;
 	requirement: IRequirementRead;
 }
@@ -46,7 +46,7 @@ export interface IRecipeComponent {
 	quantity: number;
 }
 
-interface IRecipeOutput {
+export interface IRecipeOutput {
 	recipeId: number;
 	recipe: IRecipeRead;
 	itemId: number;

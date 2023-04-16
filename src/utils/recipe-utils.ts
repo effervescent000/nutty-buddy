@@ -1,13 +1,17 @@
-import type { Item, RecipeComponents } from '@prisma/client';
+import type { IItemRead, IRecipeComponent } from '../typing/interfaces';
+
 import { queryItemWithComponents } from './db-utils';
 
 export const getComponents = async (
 	recipeJoins: {
-		components: RecipeComponents & { item: Item };
+		components: Pick<IRecipeComponent, 'itemId' | 'quantity'>;
 		cumulativeMod?: number;
 	}[]
-): Promise<{ item: Item; qty: number }[]> => {
-	const rawMaterials = [] as { item: Item; qty: number }[];
+): Promise<{ item: Pick<IItemRead, 'name' | 'id'>; qty: number }[]> => {
+	const rawMaterials = [] as {
+		item: Pick<IItemRead, 'name' | 'id'>;
+		qty: number;
+	}[];
 	const results = await queryItemWithComponents(
 		recipeJoins.map(({ components: { itemId } }) => itemId)
 	);

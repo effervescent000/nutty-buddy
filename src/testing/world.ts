@@ -19,16 +19,34 @@ const recipeTreeFactory = ({
 	[parent.id]: {
 		id: parent.id,
 		name: parent.name,
+		type: 'item',
+		quantity: null,
+		userId: 1,
+		modId: null,
 		producedBy: components.length
 			? [
 					{
-						chance: parent.qty,
+						chance: parent.qty || 1,
+						itemId: parent.id,
+						recipeId: 0,
 						recipe: {
+							userId: 1,
+							id: 1,
+							methodId: null,
 							components: components.map(({ id, name, qty }) => ({
 								quantity: qty,
+								recipeId: 0,
 								itemId: id,
-								item: { id, name }
-							}))
+								item: {
+									id,
+									name,
+									quantity: null,
+									userId: 1,
+									modId: null,
+									type: 'item'
+								}
+							})),
+							recipeRequirements: []
 						}
 					}
 			  ]
