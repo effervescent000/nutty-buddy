@@ -1,6 +1,6 @@
 import { db } from '../../../db.server.js';
 import { validateUser } from '../../../utils/api-utils.js';
-import { getComponents } from '../../../utils/db-utils.js';
+import { getComponents } from '../../../utils/recipe-utils.js';
 
 export const load = async ({ params, cookies }) => {
 	const userId = validateUser(cookies);
@@ -31,7 +31,9 @@ export const load = async ({ params, cookies }) => {
 	});
 
 	if (item && item.producedBy.length) {
-		const result = await getComponents(item.producedBy[0].recipe.components);
+		const result = await getComponents(
+			item.producedBy[0].recipe.components.map((comp) => ({ components: comp }))
+		);
 		const mergedResult = result.reduce(
 			(acc, cur) => ({
 				...acc,
