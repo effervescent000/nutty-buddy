@@ -2,21 +2,29 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { RECIPE_TREE, ids } from '../testing/world';
 import * as dbUtils from './db-utils';
-import { getComponents, type TComponents } from './recipe-utils';
+import {
+	getComponents,
+	getRawMaterials,
+	type TComponents
+} from './recipe-utils';
 import _ from 'lodash';
 
 const STICK_COMPONENT_RESPONSE = {
-	item: { name: 'stick', id: ids.stick },
+	item: { name: 'stick', id: ids.stick, producedBy: [{ chance: 4 }] },
 	components: [
 		{
 			item: {
 				item: {
 					name: 'plank',
-					id: ids.plank
+					id: ids.plank,
+					producedBy: [{ chance: 4 }]
 				},
 				components: [
 					{
-						item: { item: { name: 'log', id: ids.log }, components: [] },
+						item: {
+							item: { name: 'log', id: ids.log, producedBy: undefined },
+							components: []
+						},
 						qty: 1
 					}
 				]
@@ -38,7 +46,11 @@ const ANDESITE_ALLOY_COMPONENT_RESPONSE = {
 		},
 		{
 			item: {
-				item: { id: ids.ironNugget, name: 'iron nugget' },
+				item: {
+					id: ids.ironNugget,
+					name: 'iron nugget',
+					producedBy: [{ chance: 0.4 }]
+				},
 				components: [
 					{
 						item: {
@@ -69,7 +81,11 @@ const ANDESITE_ALLOY_COMPONENT_RESPONSE = {
 };
 
 const pruneResponse = (response: TComponents): TComponents => {
-	const item = _.pick(response.item, ['name', 'id']);
+	const item = _.pick(response.item, ['name', 'id', 'producedBy']);
+	item.producedBy =
+		!item.producedBy?.length || item.producedBy[0].chance === 1
+			? undefined
+			: item.producedBy.map((x) => _.pick(x, 'chance'));
 	const components = response.components.map((comp) => ({
 		qty: comp.qty,
 		item: pruneResponse(comp.item)
@@ -102,5 +118,20 @@ describe('tests of `getComponents`', () => {
 				await getComponents({ name: 'andesite alloy', id: ids.andesiteAlloy })
 			)
 		).toEqual(ANDESITE_ALLOY_COMPONENT_RESPONSE);
+	});
+});
+
+describe('tests of `getRawMaterials', () => {
+	it('handles the stick example', () => {
+		expect(getRawMaterials(STICK_COMPONENT_RESPONSE)).toEqual([
+			{ item: { name: 'log', id: ids.log, producedBy: undefined }, qty: 1 }
+		]);
+	});
+
+	it('handles andesite alloy', () => {
+		expect(getRawMaterials(ANDESITE_ALLOY_COMPONENT_RESPONSE)).toEqual([
+			{ item: { name: 'andesite', id: ids.andesite }, qty: 2 },
+			{ item: { name: 'cobblestone', id: ids.cobblestone }, qty: 5 }
+		]);
 	});
 });

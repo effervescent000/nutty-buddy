@@ -1,8 +1,10 @@
-import type { IItemRead } from '../typing/interfaces';
-
 import { queryItemWithComponents } from './db-utils';
 
-export type TMinimalItem = Pick<IItemRead, 'name' | 'id'>;
+export type TMinimalItem = {
+	name: string;
+	id: number;
+	producedBy?: { chance: number }[];
+};
 
 export type TComponents = {
 	item: TMinimalItem;
@@ -21,4 +23,26 @@ export const getComponents = async (item: TMinimalItem) => {
 	}
 
 	return componentTree;
+};
+
+export const getRawMaterials = (componentTree: TComponents, neededQty = 1) => {
+	const rawMaterials: { item: TMinimalItem; qty: number }[] = [];
+
+	componentTree.components.forEach(({ item: components, qty }) => {
+		if (components.components.length === 0) {
+			rawMaterials.push({
+				item: components.item,
+				qty: Math.max(qty * neededQty, 1)
+			});
+		} else {
+			rawMaterials.push(
+				...getRawMaterials(
+					components,
+					(neededQty * qty) / (components.item.producedBy?.[0].chance || 1)
+				)
+			);
+		}
+	});
+
+	return rawMaterials;
 };
