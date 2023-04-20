@@ -7,7 +7,11 @@
 	// PROPS
 	export let recipes: IRecipeRead[];
 	export let rawMaterials: TItemsById;
-	export let steps: TItemsById;
+	export let steps: {
+		name: string;
+		qty: number;
+		depth: number;
+	}[];
 	export let targetItem: IItemRead;
 
 	// STATE
@@ -48,7 +52,7 @@
 				{/each}
 			</div>
 			<div>
-				{#each Object.values(steps).reverse() as step}
+				{#each steps as step}
 					<div>
 						<span>
 							{`${step.qty * selectedQuantity} ${step.name}`}

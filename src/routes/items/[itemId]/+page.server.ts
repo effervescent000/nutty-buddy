@@ -1,4 +1,5 @@
 import { db } from '../../../db.server.js';
+import sortArray from 'sort-array';
 import { validateUser } from '../../../utils/api-utils.js';
 import {
 	getComponents,
@@ -55,13 +56,16 @@ export const load = async ({ params, cookies }) => {
 				...acc,
 				[cur.item.id]: {
 					name: cur.item.name,
-					qty: (acc[cur.item.id]?.qty || 0) + cur.qty
+					qty: (acc[cur.item.id]?.qty || 0) + cur.qty,
+					depth: cur.depth
 				}
 			}),
-			{} as { [id: number]: { name: string; qty: number } }
+			{} as { [id: number]: { name: string; qty: number; depth: number } }
 		);
 
-		return { item, rawMaterials: cleanedRawMaterials, steps: cleanedSteps };
+		const sortedSteps = sortArray(Object.values(cleanedSteps), { by: 'depth' });
+
+		return { item, rawMaterials: cleanedRawMaterials, steps: sortedSteps };
 	}
 	return { item };
 };

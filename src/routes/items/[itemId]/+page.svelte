@@ -9,7 +9,11 @@
 		item: IItemRead;
 		mods: IModRead[];
 		rawMaterials: TItemsById;
-		steps: TItemsById;
+		steps: {
+			name: string;
+			qty: number;
+			depth: number;
+		}[];
 	};
 
 	// STATE

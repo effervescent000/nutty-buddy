@@ -47,13 +47,18 @@ export const getRawMaterials = (componentTree: TComponents, neededQty = 1) => {
 	return rawMaterials;
 };
 
-export const makeSteps = (componentTree: TComponents, neededQty = 1) => {
+export const makeSteps = (
+	componentTree: TComponents,
+	neededQty = 1,
+	depth = 1
+) => {
 	const steps = [];
 
 	if (componentTree.components.length) {
 		steps.push({
 			item: componentTree.item,
-			qty: neededQty
+			qty: neededQty,
+			depth
 		});
 
 		componentTree.components.forEach((comp) => {
@@ -62,7 +67,8 @@ export const makeSteps = (componentTree: TComponents, neededQty = 1) => {
 					comp.item,
 					Math.ceil(
 						neededQty / (componentTree.item.producedBy?.[0].chance || 1)
-					) * comp.qty
+					) * comp.qty,
+					depth + 1
 				)
 			);
 		});
