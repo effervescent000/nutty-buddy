@@ -1,5 +1,5 @@
+import _ from 'lodash';
 import { db } from '../../../db.server.js';
-import sortArray from 'sort-array';
 import { validateUser } from '../../../utils/api-utils.js';
 import {
 	getComponents,
@@ -63,7 +63,7 @@ export const load = async ({ params, cookies }) => {
 			{} as { [id: number]: { name: string; qty: number; depth: number } }
 		);
 
-		const sortedSteps = sortArray(Object.values(cleanedSteps), { by: 'depth' });
+		const sortedSteps = _.sortBy(Object.values(cleanedSteps), 'depth');
 
 		return { item, rawMaterials: cleanedRawMaterials, steps: sortedSteps };
 	}
