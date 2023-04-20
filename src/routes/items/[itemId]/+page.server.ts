@@ -1,6 +1,6 @@
 import { db } from '../../../db.server.js';
 import { validateUser } from '../../../utils/api-utils.js';
-import { getComponents } from '../../../utils/recipe-utils.js';
+import { getComponents, getRawMaterials } from '../../../utils/recipe-utils.js';
 
 export const load = async ({ params, cookies }) => {
 	const userId = validateUser(cookies);
@@ -31,20 +31,21 @@ export const load = async ({ params, cookies }) => {
 	});
 
 	if (item && item.producedBy.length) {
-		const result = await getComponents(
-			item.producedBy[0].recipe.components.map((comp) => ({ components: comp }))
-		);
-		const mergedResult = result.reduce(
+		const componentTree = await getComponents(item);
+
+		const rawMaterials = getRawMaterials(componentTree);
+		const cleanedRawMaterials = rawMaterials.reduce(
 			(acc, cur) => ({
 				...acc,
 				[cur.item.id]: {
 					name: cur.item.name,
-					qty: cur.qty + (acc[cur.item.id]?.qty || 0)
+					qty: (acc[cur.item.id].qty || 0) + cur.qty
 				}
 			}),
 			{} as { [id: number]: { name: string; qty: number } }
 		);
-		return { item, recipeValues: mergedResult };
+
+		return { item, rawMaterials: cleanedRawMaterials };
 	}
 	return { item };
 };
