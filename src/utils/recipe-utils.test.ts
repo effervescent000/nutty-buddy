@@ -5,6 +5,7 @@ import * as dbUtils from './db-utils';
 import {
 	getComponents,
 	getRawMaterials,
+	makeSteps,
 	type TComponents
 } from './recipe-utils';
 import _ from 'lodash';
@@ -132,6 +133,21 @@ describe('tests of `getRawMaterials', () => {
 		expect(getRawMaterials(ANDESITE_ALLOY_COMPONENT_RESPONSE)).toEqual([
 			{ item: { name: 'andesite', id: ids.andesite }, qty: 2 },
 			{ item: { name: 'cobblestone', id: ids.cobblestone }, qty: 5 }
+		]);
+	});
+});
+
+describe('tests of `makeSteps`', () => {
+	it('handles the stick example', () => {
+		expect(makeSteps(STICK_COMPONENT_RESPONSE)).toEqual([
+			{
+				item: { name: 'stick', id: ids.stick, producedBy: [{ chance: 4 }] },
+				qty: 1
+			},
+			{
+				item: { name: 'plank', id: ids.plank, producedBy: [{ chance: 4 }] },
+				qty: 2
+			}
 		]);
 	});
 });
