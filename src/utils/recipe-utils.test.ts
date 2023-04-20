@@ -142,11 +142,13 @@ describe('tests of `makeSteps`', () => {
 		expect(makeSteps(STICK_COMPONENT_RESPONSE)).toEqual([
 			{
 				item: { name: 'stick', id: ids.stick, producedBy: [{ chance: 4 }] },
-				qty: 1
+				qty: 1,
+				depth: 1
 			},
 			{
 				item: { name: 'plank', id: ids.plank, producedBy: [{ chance: 4 }] },
-				qty: 2
+				qty: 2,
+				depth: 2
 			}
 		]);
 	});
