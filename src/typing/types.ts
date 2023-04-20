@@ -11,3 +11,5 @@ export type TCleanedRecipeData = {
 	components: { slot: number; itemId?: number; qty?: number }[];
 	output: { slot: number; itemId?: number; qty?: number }[];
 };
+
+export type TItemsById = { [id: number]: { name: string; qty: number } };

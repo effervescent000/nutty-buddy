@@ -1,45 +1,78 @@
-import type { IItemRead, IRecipeComponent } from '../typing/interfaces';
-
 import { queryItemWithComponents } from './db-utils';
 
-export const getComponents = async (
-	recipeJoins: {
-		components: Pick<IRecipeComponent, 'itemId' | 'quantity'>;
-		cumulativeMod?: number;
-	}[]
-): Promise<{ item: Pick<IItemRead, 'name' | 'id'>; qty: number }[]> => {
-	const rawMaterials = [] as {
-		item: Pick<IItemRead, 'name' | 'id'>;
-		qty: number;
-	}[];
-	const results = await queryItemWithComponents(
-		recipeJoins.map(({ components: { itemId } }) => itemId)
-	);
+export type TMinimalItem = {
+	name: string;
+	id: number;
+	producedBy?: { chance: number }[];
+};
 
-	for (const item of results) {
-		const matchedJoin = recipeJoins.find(
-			({ components: { itemId } }) => item.id === itemId
-		);
-		if (item.producedBy.length) {
-			const components = item.producedBy[0].recipe.components;
-			if (components.length) {
-				const subComponents = await getComponents(
-					components.map((comp) => ({
-						components: comp,
-						cumulativeMod:
-							item.producedBy[0].chance / (matchedJoin?.cumulativeMod || 1)
-					}))
-				);
-				rawMaterials.push(...subComponents);
-			}
-		} else {
-			rawMaterials.push({
-				item,
-				qty:
-					(matchedJoin?.components.quantity || 1) *
-					(matchedJoin?.cumulativeMod || 1)
-			});
+export type TComponents = {
+	item: TMinimalItem;
+	components: { item: TComponents; qty: number }[];
+};
+
+export const getComponents = async (item: TMinimalItem) => {
+	const [fullItem] = await queryItemWithComponents([item.id]);
+	const componentTree: TComponents = { item: fullItem, components: [] };
+
+	if (fullItem.producedBy.length) {
+		for (const comp of fullItem.producedBy[0].recipe.components) {
+			const result = await getComponents(comp.item);
+			componentTree.components.push({ item: result, qty: comp.quantity });
 		}
 	}
+
+	return componentTree;
+};
+
+export const getRawMaterials = (componentTree: TComponents, neededQty = 1) => {
+	const rawMaterials: { item: TMinimalItem; qty: number }[] = [];
+
+	componentTree.components.forEach(({ item: components, qty }) => {
+		if (components.components.length === 0) {
+			rawMaterials.push({
+				item: components.item,
+				qty: Math.max(qty * neededQty, 1)
+			});
+		} else {
+			rawMaterials.push(
+				...getRawMaterials(
+					components,
+					(neededQty * qty) / (components.item.producedBy?.[0].chance || 1)
+				)
+			);
+		}
+	});
+
 	return rawMaterials;
+};
+
+export const makeSteps = (
+	componentTree: TComponents,
+	neededQty = 1,
+	depth = 1
+) => {
+	const steps = [];
+
+	if (componentTree.components.length) {
+		steps.push({
+			item: componentTree.item,
+			qty: neededQty,
+			depth
+		});
+
+		componentTree.components.forEach((comp) => {
+			steps.push(
+				...makeSteps(
+					comp.item,
+					Math.ceil(
+						neededQty / (componentTree.item.producedBy?.[0].chance || 1)
+					) * comp.qty,
+					depth + 1
+				)
+			);
+		});
+	}
+
+	return steps;
 };

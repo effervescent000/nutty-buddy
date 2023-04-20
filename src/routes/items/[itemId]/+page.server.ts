@@ -1,6 +1,11 @@
+import _ from 'lodash';
 import { db } from '../../../db.server.js';
 import { validateUser } from '../../../utils/api-utils.js';
-import { getComponents } from '../../../utils/recipe-utils.js';
+import {
+	getComponents,
+	getRawMaterials,
+	makeSteps
+} from '../../../utils/recipe-utils.js';
 
 export const load = async ({ params, cookies }) => {
 	const userId = validateUser(cookies);
@@ -31,20 +36,36 @@ export const load = async ({ params, cookies }) => {
 	});
 
 	if (item && item.producedBy.length) {
-		const result = await getComponents(
-			item.producedBy[0].recipe.components.map((comp) => ({ components: comp }))
-		);
-		const mergedResult = result.reduce(
+		const componentTree = await getComponents(item);
+
+		const rawMaterials = getRawMaterials(componentTree);
+		const cleanedRawMaterials = rawMaterials.reduce(
 			(acc, cur) => ({
 				...acc,
 				[cur.item.id]: {
 					name: cur.item.name,
-					qty: cur.qty + (acc[cur.item.id]?.qty || 0)
+					qty: (acc[cur.item.id]?.qty || 0) + cur.qty
 				}
 			}),
 			{} as { [id: number]: { name: string; qty: number } }
 		);
-		return { item, recipeValues: mergedResult };
+
+		const steps = makeSteps(componentTree);
+		const cleanedSteps = steps.reduceRight(
+			(acc, cur) => ({
+				...acc,
+				[cur.item.id]: {
+					name: cur.item.name,
+					qty: (acc[cur.item.id]?.qty || 0) + cur.qty,
+					depth: cur.depth
+				}
+			}),
+			{} as { [id: number]: { name: string; qty: number; depth: number } }
+		);
+
+		const sortedSteps = _.sortBy(Object.values(cleanedSteps), 'depth');
+
+		return { item, rawMaterials: cleanedRawMaterials, steps: sortedSteps };
 	}
 	return { item };
 };

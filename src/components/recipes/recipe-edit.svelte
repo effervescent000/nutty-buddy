@@ -40,6 +40,7 @@
 			name="component"
 			rawOptions={data.items}
 			title="Recipe Components"
+			numInputs={9}
 			subheader="Input"
 			initialValues={recipe.components?.map((comp) => ({
 				id: comp.item.id,

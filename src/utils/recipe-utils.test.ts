@@ -2,20 +2,98 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { RECIPE_TREE, ids } from '../testing/world';
 import * as dbUtils from './db-utils';
-import { getComponents } from './recipe-utils';
+import {
+	getComponents,
+	getRawMaterials,
+	makeSteps,
+	type TComponents
+} from './recipe-utils';
+import _ from 'lodash';
 
-const responseFactory = (id: number, name: string, qty: number) => ({
-	item: {
-		id,
-		name,
-		producedBy: [],
-		modId: null,
-		quantity: null,
-		type: 'item',
-		userId: 1
-	},
-	qty
-});
+const STICK_COMPONENT_RESPONSE = {
+	item: { name: 'stick', id: ids.stick, producedBy: [{ chance: 4 }] },
+	components: [
+		{
+			item: {
+				item: {
+					name: 'plank',
+					id: ids.plank,
+					producedBy: [{ chance: 4 }]
+				},
+				components: [
+					{
+						item: {
+							item: { name: 'log', id: ids.log, producedBy: undefined },
+							components: []
+						},
+						qty: 1
+					}
+				]
+			},
+			qty: 2
+		}
+	]
+};
+
+const ANDESITE_ALLOY_COMPONENT_RESPONSE = {
+	item: { name: 'andesite alloy', id: ids.andesiteAlloy },
+	components: [
+		{
+			item: {
+				item: { id: ids.andesite, name: 'andesite' },
+				components: []
+			},
+			qty: 2
+		},
+		{
+			item: {
+				item: {
+					id: ids.ironNugget,
+					name: 'iron nugget',
+					producedBy: [{ chance: 0.4 }]
+				},
+				components: [
+					{
+						item: {
+							item: {
+								id: ids.gravel,
+								name: 'gravel'
+							},
+							components: [
+								{
+									item: {
+										item: {
+											id: ids.cobblestone,
+											name: 'cobblestone'
+										},
+										components: []
+									},
+									qty: 1
+								}
+							]
+						},
+						qty: 1
+					}
+				]
+			},
+			qty: 2
+		}
+	]
+};
+
+const pruneResponse = (response: TComponents): TComponents => {
+	const item = _.pick(response.item, ['name', 'id', 'producedBy']);
+	item.producedBy =
+		!item.producedBy?.length || item.producedBy[0].chance === 1
+			? undefined
+			: item.producedBy.map((x) => _.pick(x, 'chance'));
+	const components = response.components.map((comp) => ({
+		qty: comp.qty,
+		item: pruneResponse(comp.item)
+	}));
+
+	return { item, components };
+};
 
 describe('tests of `getComponents`', () => {
 	beforeEach(() => {
@@ -31,18 +109,47 @@ describe('tests of `getComponents`', () => {
 
 	it('handles simple recursion', async () => {
 		expect(
-			await getComponents([{ components: { itemId: ids.stick, quantity: 4 } }])
-		).toEqual([responseFactory(ids.log, 'log', 1)]);
+			pruneResponse(await getComponents({ name: 'stick', id: ids.stick }))
+		).toEqual(STICK_COMPONENT_RESPONSE);
 	});
 
 	it('handles the more complex case of andesite alloy', async () => {
 		expect(
-			await getComponents([
-				{ components: { itemId: ids.andesiteAlloy, quantity: 1 } }
-			])
-		).toEqual([
-			responseFactory(ids.andesite, 'andesite', 2),
-			responseFactory(ids.cobblestone, 'cobblestone', 2.5)
+			pruneResponse(
+				await getComponents({ name: 'andesite alloy', id: ids.andesiteAlloy })
+			)
+		).toEqual(ANDESITE_ALLOY_COMPONENT_RESPONSE);
+	});
+});
+
+describe('tests of `getRawMaterials', () => {
+	it('handles the stick example', () => {
+		expect(getRawMaterials(STICK_COMPONENT_RESPONSE)).toEqual([
+			{ item: { name: 'log', id: ids.log, producedBy: undefined }, qty: 1 }
+		]);
+	});
+
+	it('handles andesite alloy', () => {
+		expect(getRawMaterials(ANDESITE_ALLOY_COMPONENT_RESPONSE)).toEqual([
+			{ item: { name: 'andesite', id: ids.andesite }, qty: 2 },
+			{ item: { name: 'cobblestone', id: ids.cobblestone }, qty: 5 }
+		]);
+	});
+});
+
+describe('tests of `makeSteps`', () => {
+	it('handles the stick example', () => {
+		expect(makeSteps(STICK_COMPONENT_RESPONSE)).toEqual([
+			{
+				item: { name: 'stick', id: ids.stick, producedBy: [{ chance: 4 }] },
+				qty: 1,
+				depth: 1
+			},
+			{
+				item: { name: 'plank', id: ids.plank, producedBy: [{ chance: 4 }] },
+				qty: 2,
+				depth: 2
+			}
 		]);
 	});
 });
