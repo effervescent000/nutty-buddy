@@ -1,6 +1,10 @@
 import { db } from '../../../db.server.js';
 import { validateUser } from '../../../utils/api-utils.js';
-import { getComponents, getRawMaterials } from '../../../utils/recipe-utils.js';
+import {
+	getComponents,
+	getRawMaterials,
+	makeSteps
+} from '../../../utils/recipe-utils.js';
 
 export const load = async ({ params, cookies }) => {
 	const userId = validateUser(cookies);
@@ -39,13 +43,25 @@ export const load = async ({ params, cookies }) => {
 				...acc,
 				[cur.item.id]: {
 					name: cur.item.name,
-					qty: (acc[cur.item.id].qty || 0) + cur.qty
+					qty: (acc[cur.item.id]?.qty || 0) + cur.qty
 				}
 			}),
 			{} as { [id: number]: { name: string; qty: number } }
 		);
 
-		return { item, rawMaterials: cleanedRawMaterials };
+		const steps = makeSteps(componentTree);
+		const cleanedSteps = steps.reduceRight(
+			(acc, cur) => ({
+				...acc,
+				[cur.item.id]: {
+					name: cur.item.name,
+					qty: (acc[cur.item.id]?.qty || 0) + cur.qty
+				}
+			}),
+			{} as { [id: number]: { name: string; qty: number } }
+		);
+
+		return { item, rawMaterials: cleanedRawMaterials, steps: cleanedSteps };
 	}
 	return { item };
 };

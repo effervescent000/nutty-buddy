@@ -2,17 +2,14 @@
 	import NewItemCardV2 from '../../../components/items/new-item-card-v2.svelte';
 	import RecipeDisplay from '../../../components/items/recipe-display.svelte';
 	import type { IItemRead, IModRead } from '../../../typing/interfaces';
+	import type { TItemsById } from '../../../typing/types';
 
 	// PROPS
 	export let data: {
 		item: IItemRead;
 		mods: IModRead[];
-		recipeValues: {
-			[id: number]: {
-				name: string;
-				qty: number;
-			};
-		};
+		rawMaterials: TItemsById;
+		steps: TItemsById;
 	};
 
 	// STATE
@@ -24,7 +21,8 @@
 	<NewItemCardV2 item={data.item} mods={data.mods} />
 	<RecipeDisplay
 		recipes={data.item?.producedBy?.map(({ recipe }) => recipe) || []}
-		recipeValues={data.recipeValues}
+		rawMaterials={data.rawMaterials}
+		steps={data.steps}
 		targetItem={data.item}
 	/>
 </div>

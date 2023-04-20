@@ -1,16 +1,13 @@
 <script lang="ts">
 	import type { IItemRead, IRecipeRead } from '../../typing/interfaces';
+	import type { TItemsById } from '../../typing/types';
 
 	import ControlledTextInput from '../common/controlled-text-input.svelte';
 
 	// PROPS
 	export let recipes: IRecipeRead[];
-	export let recipeValues: {
-		[id: number]: {
-			name: string;
-			qty: number;
-		};
-	};
+	export let rawMaterials: TItemsById;
+	export let steps: TItemsById;
 	export let targetItem: IItemRead;
 
 	// STATE
@@ -31,7 +28,7 @@
 			>
 		{/each}
 	</div>
-	<div>
+	<div class="flex">
 		{#if focusedRecipe}
 			<div class="flex flex-col">
 				<ControlledTextInput
@@ -39,16 +36,24 @@
 					callback={(value) => (selectedQuantity = +value)}
 					testid="qty-input"
 				/>
-
-				{#each Object.values(recipeValues) as rv}
+				{#each Object.values(rawMaterials) as rm}
 					<span
 						>{`${+(
-							(rv.qty * selectedQuantity) /
+							(rm.qty * selectedQuantity) /
 							(targetItem.producedBy.find(
 								({ recipeId }) => recipeId === focusedRecipe?.id
 							)?.chance || 1)
-						).toPrecision(3)} ${rv.name}`}</span
+						).toPrecision(3)} ${rm.name}`}</span
 					>
+				{/each}
+			</div>
+			<div>
+				{#each Object.values(steps).reverse() as step}
+					<div>
+						<span>
+							{`${step.qty * selectedQuantity} ${step.name}`}
+						</span>
+					</div>
 				{/each}
 			</div>
 		{/if}
