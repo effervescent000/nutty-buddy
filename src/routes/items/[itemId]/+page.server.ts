@@ -6,6 +6,7 @@ import {
 	getRawMaterials,
 	makeSteps
 } from '../../../utils/recipe-utils.js';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, cookies }) => {
 	const userId = validateUser(cookies);
@@ -72,7 +73,7 @@ export const load = async ({ params, cookies }) => {
 
 export const actions = {
 	// this is the UPDATE FUNCTION DUMMY
-	default: async ({ cookies, request, params }) => {
+	update: async ({ cookies, request, params }) => {
 		const userId = validateUser(cookies);
 		const itemId = +params.itemId;
 		const formData = Object.fromEntries((await request.formData()).entries());
@@ -99,5 +100,15 @@ export const actions = {
 			}
 		});
 		return { item };
+	},
+	delete: async ({ cookies, params }) => {
+		validateUser(cookies);
+		const itemId = +params.itemId;
+		await db.item.delete({
+			where: {
+				id: itemId
+			}
+		});
+		throw redirect(303, '/items');
 	}
 };

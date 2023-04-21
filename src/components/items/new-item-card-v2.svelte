@@ -12,6 +12,7 @@
 
 	export let mods: IModRead[];
 	export let item: Partial<IItemRead> = {};
+	export let action: string;
 
 	// STATE
 
@@ -23,7 +24,11 @@
 	}));
 </script>
 
-<form method="post" class="flex flex-col gap-1 w-[20rem]">
+<form
+	method="post"
+	action={`?/${action}`}
+	class="flex flex-col gap-1 w-[20rem]"
+>
 	<input type="hidden" name="item-id" value={item.id} />
 	<UncontrolledTextInput
 		name="item-name"
