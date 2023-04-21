@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { IRequirementRead } from '../../typing/interfaces';
 	import Checkbox from '../common/checkbox.svelte';
 
@@ -15,7 +16,7 @@
 	data-testid={`req-card-${requirement.name}`}
 	class="border border-green m-2 p-1"
 >
-	<form method="post" action="?/update" bind:this={form}>
+	<form method="post" action="?/update" bind:this={form} use:enhance>
 		<Checkbox
 			name="completed"
 			initialValue={requirement.completed}

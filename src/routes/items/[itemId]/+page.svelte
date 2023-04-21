@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Button from '../../../components/common/button.svelte';
 	import NewItemCardV2 from '../../../components/items/new-item-card-v2.svelte';
 	import RecipeDisplay from '../../../components/items/recipe-display.svelte';
@@ -25,7 +26,7 @@
 <div class="grid grid-cols-2">
 	<div>
 		<NewItemCardV2 item={data.item} mods={data.mods} action="update" />
-		<form method="post" action="?/delete">
+		<form method="post" action="?/delete" use:enhance>
 			<Button type="submit">Delete</Button>
 		</form>
 	</div>

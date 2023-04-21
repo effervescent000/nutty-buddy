@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { ITEM_TYPES } from '../../constants/item-constants';
 
 	import type { IItemRead, IModRead } from '../../typing/interfaces';
@@ -28,6 +29,7 @@
 	method="post"
 	action={`?/${action}`}
 	class="flex flex-col gap-1 w-[20rem]"
+	use:enhance
 >
 	<input type="hidden" name="item-id" value={item.id} />
 	<UncontrolledTextInput

@@ -11,6 +11,7 @@
 	import UncontrolledSelect from '../common/uncontrolled-select.svelte';
 	import Button from '../common/button.svelte';
 	import ItemInputsWrapper from './item-inputs-wrapper.svelte';
+	import { enhance } from '$app/forms';
 
 	// PROPS
 	export let recipe: IRecipeRead = {} as IRecipeRead;
@@ -33,7 +34,7 @@
 	}));
 </script>
 
-<form class="flex flex-col items-center" method="post">
+<form class="flex flex-col items-center" method="post" use:enhance>
 	<input type="hidden" name="id" value={recipe.id} />
 	<div class="flex gap-4">
 		<ItemInputsWrapper

@@ -7,6 +7,7 @@
 
 	import Button from '../components/common/button.svelte';
 	import UncontrolledTextInput from '../components/common/uncontrolled-text-input.svelte';
+	import { enhance } from '$app/forms';
 
 	// LOGIC
 	const handleSubmit = async (event: SubmitEvent) => {
@@ -20,7 +21,7 @@
 	};
 </script>
 
-<form method="post" on:submit={handleSubmit}>
+<form method="post" on:submit={handleSubmit} use:enhance>
 	<label for="username">
 		<span>Username: </span>
 		<UncontrolledTextInput id="username" name="username" testid="login-input" />
