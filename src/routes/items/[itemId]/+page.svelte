@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '../../../components/common/button.svelte';
 	import NewItemCardV2 from '../../../components/items/new-item-card-v2.svelte';
 	import RecipeDisplay from '../../../components/items/recipe-display.svelte';
 	import type { IItemRead, IModRead } from '../../../typing/interfaces';
@@ -22,7 +23,13 @@
 </script>
 
 <div class="grid grid-cols-2">
-	<NewItemCardV2 item={data.item} mods={data.mods} />
+	<div>
+		<NewItemCardV2 item={data.item} mods={data.mods} action="update" />
+		<form method="post" action="?/delete">
+			<Button type="submit">Delete</Button>
+		</form>
+	</div>
+
 	<RecipeDisplay
 		recipes={data.item?.producedBy?.map(({ recipe }) => recipe) || []}
 		rawMaterials={data.rawMaterials}

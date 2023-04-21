@@ -5,4 +5,4 @@
 	export let data: { mods: Mod[] };
 </script>
 
-<ItemInput mods={data.mods} />
+<ItemInput mods={data.mods} action="create" />

@@ -6,7 +6,7 @@ import {
 } from '../../utils/general-utils.js';
 
 export const actions = {
-	default: async ({ request, cookies }) => {
+	create: async ({ request, cookies }) => {
 		const userId = validateUser(cookies);
 		const data = await request.formData();
 		const itemName = data.get('item-name')?.toString();
