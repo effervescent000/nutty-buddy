@@ -7,7 +7,10 @@ export const load = async ({ cookies }) => {
 		where: { userId },
 		orderBy: { name: 'asc' }
 	});
-	const methods = await db.method.findMany({ where: { userId } });
+	const methods = await db.method.findMany({
+		where: { userId },
+		orderBy: { name: 'asc' }
+	});
 	const requirements = await db.requirement.findMany({ where: { userId } });
 	const recipes = await db.recipe.findMany({
 		where: { userId },
