@@ -32,13 +32,18 @@ export const getRawMaterials = (componentTree: TComponents, neededQty = 1) => {
 		if (components.components.length === 0) {
 			rawMaterials.push({
 				item: components.item,
-				qty: Math.max(qty * neededQty, 1)
+				qty:
+					Math.ceil(
+						neededQty / (componentTree.item.producedBy?.[0].chance || 1)
+					) * qty
 			});
 		} else {
 			rawMaterials.push(
 				...getRawMaterials(
 					components,
-					(neededQty * qty) / (components.item.producedBy?.[0].chance || 1)
+					Math.ceil(
+						neededQty / (componentTree.item.producedBy?.[0].chance || 1)
+					) * qty
 				)
 			);
 		}

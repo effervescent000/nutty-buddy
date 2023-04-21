@@ -24,7 +24,8 @@ export const queryItemWithComponents = async (ids: number[]) => {
 							}
 						}
 					}
-				}
+				},
+				orderBy: { recipeId: 'desc' }
 			}
 		}
 	});
