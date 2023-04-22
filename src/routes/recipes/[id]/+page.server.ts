@@ -27,8 +27,9 @@ export const load = async ({ cookies, params: { id } }) => {
 };
 
 export const actions = {
-	default: async ({ request, cookies, params: { id } }) => {
+	default: async ({ request, cookies, params }) => {
 		validateUser(cookies);
+		const id = +params.id;
 
 		const formData = Object.fromEntries((await request.formData()).entries());
 
@@ -137,21 +138,42 @@ export const actions = {
 		}
 
 		const existingComponents =
-			existingRecipe?.components.map(({ itemId }) => itemId) || [];
-		const newComponents = (cleanedFormData.components.map(
-			({ itemId }) => itemId
-		) || []) as number[];
+			existingRecipe?.components.map(({ itemId, quantity }) => ({
+				itemId,
+				quantity
+			})) || [];
+		const newComponents =
+			cleanedFormData.components.map(({ itemId, qty }) => ({
+				itemId,
+				quantity: qty
+			})) || [];
 
-		const componentDiff = _.xor(existingComponents, newComponents) || [];
+		const componentDiff =
+			_.xorWith(existingComponents, newComponents, _.isEqual) || [];
 		if (componentDiff.length) {
 			for (const comp of componentDiff) {
-				if (existingComponents.includes(comp)) {
+				const foundInExisting = existingComponents.find(
+					(exc) => exc.itemId === comp.itemId
+				);
+				const foundInNew = newComponents.find(
+					(newc) => newc.itemId === comp.itemId
+				);
+				if (foundInExisting && foundInNew) {
+					await db.recipeComponents.update({
+						where: {
+							itemId_recipeId: { itemId: comp.itemId as number, recipeId: id }
+						},
+						data: {
+							quantity: foundInNew.quantity
+						}
+					});
+				} else if (foundInExisting) {
 					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							components: {
 								deleteMany: {
-									itemId: comp
+									itemId: comp.itemId
 								}
 							}
 						}
@@ -160,7 +182,14 @@ export const actions = {
 					await db.recipe.update({
 						where: { id: +id },
 						data: {
-							components: { create: [{ item: { connect: { id: comp } } }] }
+							components: {
+								create: [
+									{
+										item: { connect: { id: comp.itemId } },
+										quantity: foundInNew?.quantity
+									}
+								]
+							}
 						}
 					});
 				}
@@ -201,24 +230,54 @@ export const actions = {
 		}
 
 		const existingOutput =
-			existingRecipe?.output.map(({ itemId }) => itemId) || [];
-		const newOutput = (cleanedFormData.output.map(({ itemId }) => itemId) ||
-			[]) as number[];
-		const outputDiff = _.xor(existingOutput, newOutput);
+			existingRecipe?.output.map(({ itemId, chance }) => ({
+				itemId,
+				quantity: chance
+			})) || [];
+		const newOutput =
+			cleanedFormData.output.map(({ itemId, qty }) => ({
+				itemId,
+				quantity: qty
+			})) || [];
 
+		const outputDiff = _.xorWith(existingOutput, newOutput, _.isEqual) || [];
 		if (outputDiff.length) {
 			for (const out of outputDiff) {
-				if (existingOutput.includes(out)) {
+				const foundInExisting = existingOutput.find(
+					(exo) => exo.itemId === out.itemId
+				);
+				const foundInNew = newOutput.find((newo) => newo.itemId === out.itemId);
+				if (foundInExisting && foundInNew) {
+					await db.recipeOutput.update({
+						where: {
+							itemId_recipeId: { itemId: out.itemId as number, recipeId: id }
+						},
+						data: {
+							chance: foundInNew.quantity
+						}
+					});
+				} else if (foundInExisting) {
 					await db.recipe.update({
 						where: { id: +id },
-						data: { output: { deleteMany: { itemId: out } } }
+						data: {
+							output: {
+								deleteMany: {
+									itemId: out.itemId
+								}
+							}
+						}
 					});
 				} else {
 					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							output: {
-								create: [{ item: { connect: { id: out } } }]
+								create: [
+									{
+										item: { connect: { id: out.itemId } },
+										chance: foundInNew?.quantity
+									}
+								]
 							}
 						}
 					});
