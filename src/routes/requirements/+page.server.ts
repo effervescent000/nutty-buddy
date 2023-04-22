@@ -1,3 +1,4 @@
+import { redirect } from '@sveltejs/kit';
 import { db } from '../../db.server.js';
 import { validateUser } from '../../utils/api-utils.js';
 import { coerceFormDataEntryToNumber } from '../../utils/general-utils.js';
@@ -17,7 +18,7 @@ export const actions = {
 		const userId = validateUser(cookies);
 		const formData = await request.formData();
 		const name = (formData.get('req-name') as FormDataEntryValue).toString();
-		const req = await db.requirement.create({
+		await db.requirement.create({
 			data: {
 				name,
 				user: {
@@ -25,17 +26,17 @@ export const actions = {
 				}
 			}
 		});
-		return { requirement: req };
+		throw redirect(303, '/requirements');
 	},
 	update: async ({ request, cookies }) => {
 		validateUser(cookies);
 		const formData = await request.formData();
 		const id = coerceFormDataEntryToNumber(formData.get('req-id')) as number;
 		const completed = formData.get('completed') === 'on' ? true : false;
-		const updatedReq = await db.requirement.update({
+		await db.requirement.update({
 			where: { id },
 			data: { completed }
 		});
-		return updatedReq;
+		throw redirect(303, '/requirements');
 	}
 };
