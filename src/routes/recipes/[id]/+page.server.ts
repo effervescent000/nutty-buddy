@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import { db } from '../../../db.server.js';
 import { validateUser } from '../../../utils/api-utils.js';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ cookies, params: { id } }) => {
 	validateUser(cookies);
@@ -112,10 +113,9 @@ export const actions = {
 			}
 		});
 
-		let recipe;
 		if (existingRecipe?.method?.id !== cleanedFormData.method) {
 			if (existingRecipe?.method?.id) {
-				recipe = await db.recipe.update({
+				await db.recipe.update({
 					where: { id: +id },
 					data: {
 						method: {
@@ -125,7 +125,7 @@ export const actions = {
 				});
 			}
 			if (cleanedFormData.method) {
-				recipe = await db.recipe.update({
+				await db.recipe.update({
 					where: { id: +id },
 					data: {
 						method: {
@@ -146,7 +146,7 @@ export const actions = {
 		if (componentDiff.length) {
 			for (const comp of componentDiff) {
 				if (existingComponents.includes(comp)) {
-					recipe = await db.recipe.update({
+					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							components: {
@@ -157,7 +157,7 @@ export const actions = {
 						}
 					});
 				} else {
-					recipe = await db.recipe.update({
+					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							components: { create: [{ item: { connect: { id: comp } } }] }
@@ -177,7 +177,7 @@ export const actions = {
 		if (reqDiff.length) {
 			for (const req of reqDiff) {
 				if (existingReqs.includes(req)) {
-					recipe = await db.recipe.update({
+					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							recipeRequirements: {
@@ -188,7 +188,7 @@ export const actions = {
 						}
 					});
 				} else {
-					recipe = await db.recipe.update({
+					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							recipeRequirements: {
@@ -209,12 +209,12 @@ export const actions = {
 		if (outputDiff.length) {
 			for (const out of outputDiff) {
 				if (existingOutput.includes(out)) {
-					recipe = await db.recipe.update({
+					await db.recipe.update({
 						where: { id: +id },
 						data: { output: { deleteMany: { itemId: out } } }
 					});
 				} else {
-					recipe = await db.recipe.update({
+					await db.recipe.update({
 						where: { id: +id },
 						data: {
 							output: {
@@ -226,6 +226,6 @@ export const actions = {
 			}
 		}
 
-		return { recipe };
+		throw redirect(303, request.url);
 	}
 };

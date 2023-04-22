@@ -33,7 +33,7 @@ test.describe('tests re: recipes', () => {
 		await page.getByTestId(`component-select-0`).selectOption('2');
 		await page.getByTestId(`output-select-0`).selectOption('1');
 		await page.getByTestId('submit').click();
-		await page.reload();
+		await page.waitForTimeout(100);
 		await expect(page.getByTestId(`component-select-0`)).toHaveValue('2');
 		await expect(page.getByTestId(`output-select-0`)).toHaveValue('1');
 	});
